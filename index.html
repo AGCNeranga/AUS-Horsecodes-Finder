@@ -391,7 +391,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
     <div class="input-section">
         <div class="input-group">
             <label for="titleInput">TITLE (Course Name)</label>
-            <input type="text" id="titleInput" placeholder="E.g., BENDIGO, GAWLER">
+            <input type="text" id="titleInput" placeholder="E.g., BENDIGO, GAWLER, BLACKALL, LEINSTER (use comma for multiple)">
         </div>
         <div class="input-group">
             <label for="raceTypeSelect">RACE TYPE</label>
@@ -435,9 +435,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
       
               // MIT AGCN License = Use it freely, just give credit
 
-
-
-     // PAGE 12
+  // PAGE 12
 
         
     { title: "WENTWORTH PARK",         state: "NSW", code: "WWPG", type: "THOROUGHBREDS" },
@@ -1099,8 +1097,6 @@ Australian Horse Racing Codes (ISO 3166) </h1>
      // NEW ADD
 
     { title: "TAREE",   state: "NSW", code: "TREG", type: "GREYHOUNDS" },
-
-
     
         
     ];
@@ -1138,38 +1134,58 @@ Australian Horse Racing Codes (ISO 3166) </h1>
     }
 
     /**
-     * Filters the data based on user input TITLE and RACE TYPE, adds unique matching results to the global array.
-     * MODIFIED LOGIC: Search is confirmed to work on exact title match and cumulative adding of unique (title+code) entries.
+     * Filters the data based on user input TITLE (can be multiple, comma-separated) and RACE TYPE, 
+     * adds unique matching results to the global array.
      */
     function searchData() {
-        const titleInput = document.getElementById('titleInput').value.trim().toUpperCase();
+        const titleInputRaw = document.getElementById('titleInput').value.trim();
         const raceType = document.getElementById('raceTypeSelect').value;
 
-        if (titleInput === "") {
-            alert("Please enter a TITLE (Course Name) to search.");
+        if (titleInputRaw === "") {
+            alert("Please enter one or more TITLEs (Course Names) to search, separated by commas if multiple.");
             return;
         }
 
-        // 1. Filter the data based on exact TITLE match and selected RACE TYPE
-        let newFilteredData = rawCourseData.filter(item => {
-            // This is the key: an EXACT match on the title
-            const matchesTitle = item.title.toUpperCase() === titleInput;
-            const matchesRaceType = raceType === "ALL" || item.type === raceType;
-            return matchesTitle && matchesRaceType;
-        });
+        // Split the raw input by comma, filter out empty strings, trim, and capitalize each one.
+        const searchTitles = titleInputRaw.split(',')
+                                          .map(title => title.trim().toUpperCase())
+                                          .filter(title => title.length > 0);
 
-        // 2. Add only unique new items to currentDisplayedData
+        if (searchTitles.length === 0) {
+            alert("Please enter valid TITLEs.");
+            return;
+        }
+
+        // Prepare to track existing keys (Title + Code)
         const existingKeys = currentDisplayedData.map(item => item.title + item.code);
+        let matchFoundInDatabase = false; // Flag to track if the search criteria matched anything
 
-        newFilteredData.forEach(item => {
-            // Uses Title + Code as the unique identifier
-            const newKey = item.title + item.code;
-            if (!existingKeys.includes(newKey)) {
-                currentDisplayedData.push(item);
+        // Iterate through all raw course data
+        rawCourseData.forEach(item => {
+            const itemTitleUpper = item.title.toUpperCase();
+            const matchesRaceType = raceType === "ALL" || item.type === raceType;
+
+            // Check if the item's title is in the list of titles the user searched for
+            const matchesTitle = searchTitles.includes(itemTitleUpper);
+            
+            if (matchesTitle && matchesRaceType) {
+                 // Set flag to true if any match is found
+                 matchFoundInDatabase = true; 
+                 
+                 const newKey = item.title + item.code;
+                if (!existingKeys.includes(newKey)) {
+                    currentDisplayedData.push(item);
+                    existingKeys.push(newKey); // Update the keys list immediately
+                }
             }
         });
         
-        // 3. Render the updated dashboard
+        // NEW ERROR CHECK: Alert the user if the search criteria found no results in the database
+        if (!matchFoundInDatabase) {
+             alert(`ERROR: No course codes found in the database matching the criteria:\nCourse(s): ${titleInputRaw}\nRace Type: ${raceType}`);
+        }
+        
+        // Render the updated dashboard
         renderDashboard();
     }
 
@@ -1192,7 +1208,6 @@ Australian Horse Racing Codes (ISO 3166) </h1>
      * Deletes a single entry from the global array and re-renders the dashboard.
      * @param {string} title - The title of the entry to delete.
      * @param {string} code - The code of the entry to delete.
-     * EXISTING LOGIC: Confirmed to delete ONLY the specific Title+Code combination, allowing other entries with the same title to remain.
      */
     function deleteEntry(title, code) {
         // Only keep items that DO NOT match both the provided title AND code
@@ -1209,7 +1224,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         const outputDashboard = document.getElementById('outputDashboard');
         const downloadPdfButton = document.getElementById('downloadPdfButton');
         const viewPdfButton = document.getElementById('viewPdfButton');
-        const downloadTxtButton = document.getElementById('downloadTxtButton'); // Get new button
+        const downloadTxtButton = document.getElementById('downloadTxtButton');
 
         if (currentDisplayedData.length === 0) {
             outputDashboard.innerHTML = '<p id="initialMessage" style="text-align: center; color: #777; padding: 20px; background: #f0f0f0; border-radius: 4px;">Enter a TITLE and RACE TYPE and click \'Search\' to view results.</p>';
@@ -1222,7 +1237,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         // Show buttons when there are results
         downloadPdfButton.style.display = 'inline-block';
         viewPdfButton.style.display = 'inline-block';
-        downloadTxtButton.style.display = 'inline-block'; // Show new button
+        downloadTxtButton.style.display = 'inline-block';
 
         // Group the cumulative data by RACE TYPE
         const groupedData = currentDisplayedData.reduce((acc, item) => {
@@ -1243,7 +1258,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
                 const sortedItems = groupedData[type].sort((a, b) => a.title.localeCompare(b.title));
 
                 htmlContent += `<div class="race-type-section">
-                    <div class="race-type-title">${type} (${sortedItems.length} Codes)</div>
+                    <div class="race-type-title">${type} (${sortedItems.length} )</div>
                     <table class="result-table">
                         <thead>
                             <tr>
