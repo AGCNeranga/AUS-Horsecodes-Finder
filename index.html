@@ -198,6 +198,18 @@
             background-color: #00A9FF; 
             box-shadow: 0 6px 0 0 #005691, 0 0 10px #00A9FF;
         }
+        
+        /* NEW TXT Button Styling */
+        #downloadTxtButton { 
+            background-color: #FF8C00; /* Dark Orange */
+            color: var(--bg-dark);
+            box-shadow: 0 6px 0 0 #CC7000;
+        }
+        #downloadTxtButton:hover { 
+            background-color: #FFA500; /* Brighter Orange */
+            box-shadow: 0 6px 0 0 #CC7000, 0 0 10px #FFA500;
+        }
+
 
         #viewPdfButton { 
             background-color: var(--neon-yellow); /* Yellow for View */
@@ -407,6 +419,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
             👁️ View Search KEYS PDF
         </button>
         <button id="downloadPdfButton" onclick="downloadPdf()" style="display: none;">📥 Download KEYS PDF</button>
+        <button id="downloadTxtButton" onclick="downloadTxt()" style="display: none;">💾 Download KEYS TXT</button>
         <button id="printButton" onclick="window.print()">🖨️ Print Page</button>
     </div>
 
@@ -424,7 +437,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
 
 
 
-    // PAGE 12
+     // PAGE 12
 
         
     { title: "WENTWORTH PARK",         state: "NSW", code: "WWPG", type: "THOROUGHBREDS" },
@@ -1087,6 +1100,8 @@ Australian Horse Racing Codes (ISO 3166) </h1>
 
     { title: "TAREE",   state: "NSW", code: "TREG", type: "GREYHOUNDS" },
 
+
+    
         
     ];
 
@@ -1124,6 +1139,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
 
     /**
      * Filters the data based on user input TITLE and RACE TYPE, adds unique matching results to the global array.
+     * MODIFIED LOGIC: Search is confirmed to work on exact title match and cumulative adding of unique (title+code) entries.
      */
     function searchData() {
         const titleInput = document.getElementById('titleInput').value.trim().toUpperCase();
@@ -1136,6 +1152,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
 
         // 1. Filter the data based on exact TITLE match and selected RACE TYPE
         let newFilteredData = rawCourseData.filter(item => {
+            // This is the key: an EXACT match on the title
             const matchesTitle = item.title.toUpperCase() === titleInput;
             const matchesRaceType = raceType === "ALL" || item.type === raceType;
             return matchesTitle && matchesRaceType;
@@ -1145,6 +1162,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         const existingKeys = currentDisplayedData.map(item => item.title + item.code);
 
         newFilteredData.forEach(item => {
+            // Uses Title + Code as the unique identifier
             const newKey = item.title + item.code;
             if (!existingKeys.includes(newKey)) {
                 currentDisplayedData.push(item);
@@ -1174,8 +1192,10 @@ Australian Horse Racing Codes (ISO 3166) </h1>
      * Deletes a single entry from the global array and re-renders the dashboard.
      * @param {string} title - The title of the entry to delete.
      * @param {string} code - The code of the entry to delete.
+     * EXISTING LOGIC: Confirmed to delete ONLY the specific Title+Code combination, allowing other entries with the same title to remain.
      */
     function deleteEntry(title, code) {
+        // Only keep items that DO NOT match both the provided title AND code
         currentDisplayedData = currentDisplayedData.filter(item => !(item.title === title && item.code === code));
         renderDashboard();
     }
@@ -1189,17 +1209,20 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         const outputDashboard = document.getElementById('outputDashboard');
         const downloadPdfButton = document.getElementById('downloadPdfButton');
         const viewPdfButton = document.getElementById('viewPdfButton');
+        const downloadTxtButton = document.getElementById('downloadTxtButton'); // Get new button
 
         if (currentDisplayedData.length === 0) {
             outputDashboard.innerHTML = '<p id="initialMessage" style="text-align: center; color: #777; padding: 20px; background: #f0f0f0; border-radius: 4px;">Enter a TITLE and RACE TYPE and click \'Search\' to view results.</p>';
             downloadPdfButton.style.display = 'none'; // Hide PDF button when empty
             viewPdfButton.style.display = 'none'; // Hide View button when empty
+            downloadTxtButton.style.display = 'none'; // Hide TXT button when empty
             return;
         }
 
         // Show buttons when there are results
         downloadPdfButton.style.display = 'inline-block';
         viewPdfButton.style.display = 'inline-block';
+        downloadTxtButton.style.display = 'inline-block'; // Show new button
 
         // Group the cumulative data by RACE TYPE
         const groupedData = currentDisplayedData.reduce((acc, item) => {
@@ -1254,18 +1277,18 @@ Australian Horse Racing Codes (ISO 3166) </h1>
 
 
     /**
-     * Generates a PDF-friendly plain text output of the currentDisplayedData.
-     * This is used temporarily before generating the PDF/viewing.
+     * Generates a plain text output of the currentDisplayedData, formatted for both PDF and TXT.
+     * @returns {string} The formatted plain text content.
      */
-    function renderPdfContent() {
+    function getPlainTextContent() {
         const titleFixedLength = 20; // For aligning the state
         const stateFixedLength = 8;  // For aligning the code
-
-        // Header for the PDF (uses monospace for alignment)
-        let htmlContent = `
-<div class="pdf-output-data">
+        const dateString = getSriLankaDate();
+        
+        // Header for the output (uses monospace for alignment)
+        let textContent = `
 -------------------------------------------------------------
-DATE: ${getSriLankaDate()}
+DATE: ${dateString}
 TOOL: LES HORSE AUSI RACES Code Finder Dashboard (Search Results)
 TOTAL CODES: ${currentDisplayedData.length}
 -------------------------------------------------------------
@@ -1288,8 +1311,9 @@ TOTAL CODES: ${currentDisplayedData.length}
 
             // Only print section title if there is data
             if (sortedItems.length > 0) {
-                // STEP 1: ALWAYS print the race type title for PDF/View
-                htmlContent += `\n<div class="pdf-race-title">${type}</div>\n`;
+                // STEP 1: ALWAYS print the race type title
+                textContent += `\n${type}\n`;
+                textContent += '-'.repeat(type.length) + '\n';
 
                 // STEP 2: Add the data rows
                 sortedItems.forEach(item => {
@@ -1299,15 +1323,67 @@ TOTAL CODES: ${currentDisplayedData.length}
                     const paddedState = item.state.padEnd(stateFixedLength, ' ');
 
                     // Format: TITLE (padded with wide space) STATE (padded with wide space) CODE
-                    htmlContent += `${paddedTitle}${paddedState}${item.code}\n`;
+                    textContent += `${paddedTitle}${paddedState}${item.code}\n`;
                 });
-                htmlContent += '\n'; // Extra line break after each section
+                textContent += '\n'; // Extra line break after each section
             }
         });
 
-        htmlContent += '</div>';
+        return textContent;
+    }
+
+
+    /**
+     * Generates a PDF-friendly HTML output based on getPlainTextContent().
+     * This is used temporarily before generating the PDF/viewing.
+     */
+    function renderPdfContent() {
+        // Use the plain text content but wrap it in the required PDF formatting divs/classes
+        const textContent = getPlainTextContent();
+        let htmlContent = `
+<div class="pdf-output-data">
+    ${textContent.replace(/\n/g, '<br>').replace(/-{45,}/g, '<hr style="margin: 5px 0; border-top: 1px solid black;">')}
+</div>
+`;
+        // Post-processing to correctly re-add race-type-title class
+        htmlContent = htmlContent.replace(/(THOROUGHBREDS|HARNESS|GREYHOUNDS)/g, (match) => {
+            return `<div class="pdf-race-title">${match}</div>`;
+        });
+        
         return htmlContent;
     }
+
+
+    /**
+     * Downloads the content of the #pdfContent div (cumulative search results) as a plain text (.txt) file.
+     * This is the NEW function for the TXT button.
+     */
+    function downloadTxt() {
+        if (currentDisplayedData.length === 0) {
+            alert("The dashboard is empty. Please search for results before downloading the TXT file.");
+            return;
+        }
+
+        const textContent = getPlainTextContent();
+        const filename = `Search_Results_${new Date().toLocaleDateString()}.txt`;
+        
+        // Create a Blob from the text content
+        const blob = new Blob([textContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create a temporary link element for download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click(); // Trigger the download
+        
+        // Clean up
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+
 
     /**
      * Views the content of the #pdfContent div (cumulative search results) as a PDF blob in a new tab.
