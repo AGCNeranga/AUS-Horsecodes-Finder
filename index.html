@@ -433,7 +433,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
     // *** Data Extracted and Cleaned from your PDF ***
     const rawCourseData = [
       
-              // MIT AGCN License = Use it freely, just give credit
+                // MIT AGCN License = Use it freely, just give credit
 
   // PAGE 12
 
@@ -1100,8 +1100,7 @@ Australian Horse Racing Codes (ISO 3166) </h1>
     { title: "MURRAY BRIDGE",   state: "QLD", code: "MBRG", type: "GREYHOUNDS" },
     { title: "GLOUCESTER PARK", state: "QLD", code: "GLPH", type: "HARNESS" },
 
-
-    
+            
         
     ];
 
@@ -1311,13 +1310,32 @@ Australian Horse Racing Codes (ISO 3166) </h1>
     function getPlainTextContent() {
         const titleFixedLength = 20; // For aligning the state
         const stateFixedLength = 8;  // For aligning the code
-        const dateString = getSriLankaDate();
+        
+        // Calculate SL and AU dates
+        const slDate = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            timeZone: 'Asia/Colombo' 
+        };
+        const slDateString = slDate.toLocaleString('en-US', options);
+
+        // Add 2 days for AU Date
+        const auDate = new Date(slDate);
+        auDate.setDate(slDate.getDate() + 2);
+        const auDateString = auDate.toLocaleString('en-US', options);
         
         // Header for the output (uses monospace for alignment)
         let textContent = `
 -------------------------------------------------------------
-DATE: ${dateString}
-TOOL: LES HORSE AUSI RACES Code Finder Dashboard (Search Results)
+DATE SL: ${slDateString}
+DATE AU: ${auDateString}
+TOOL: LSBET AUSTRALIA RACE CODE Finder Dashboard
 TOTAL CODES: ${currentDisplayedData.length}
 -------------------------------------------------------------
 `;
@@ -1393,7 +1411,7 @@ TOTAL CODES: ${currentDisplayedData.length}
         }
 
         const textContent = getPlainTextContent();
-        const filename = `Search_Results_${new Date().toLocaleDateString()}.txt`;
+        const filename = `Australia Code List.txt`;
         
         // Create a Blob from the text content
         const blob = new Blob([textContent], { type: 'text/plain' });
