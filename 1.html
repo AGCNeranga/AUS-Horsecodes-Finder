@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSBET Australian CodeS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- VVIP FUTURISTIC DARK THEME --- */
+        :root {
+            --bg-dark: #0A0A1F; /* Very deep blue-black */
+            --container-dark: rgba(26, 26, 46, 0.9); /* Semi-transparent dark container */
+            --neon-green: #00FF00; /* Primary accent green */
+            --neon-yellow: #FFD700; /* Primary accent yellow/gold */
+            --text-light: #F0F8FF;
+            --text-muted: #A0A0B0;
+            --shadow-green: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+            --shadow-yellow: 0 0 8px var(--neon-yellow), 0 0 15px var(--neon-yellow);
+        }
+
+        /* Base and Fonts */
+        body {
+            font-family: 'Orbitron', 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            /* Subtle star field effect in the background (Animation) */
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                              radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 30px);
+            background-size: 550px 550px, 350px 350px;
+            background-position: 0 0, 40px 60px;
+            animation: starField 60s linear infinite;
+            cursor: default;
+        }
+
+        @keyframes starField {
+            from { background-position: 0 0, 40px 60px; }
+            to { background-position: 550px 550px, 390px 410px; }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 30px auto;
+            background: var(--container-dark);
+            padding: 30px 40px;
+            /* Green glow and inner yellow glow */
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 15px rgba(255, 215, 0, 0.3); 
+            border-radius: 15px;
+            border: 1px solid var(--neon-green);
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.5); 
+        }
+
+        /* Header and Title Styling */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--text-muted);
+        }
+        .sri-lanka-date {
+            font-weight: 700;
+            color: var(--neon-green);
+            font-size: 1.0em;
+            text-shadow: 0 0 5px var(--neon-green);
+            font-family: 'Roboto Mono', monospace;
+        }
+        .logout-btn {
+            background-color: #900C3F; /* Dark Magenta/Red */
+            color: var(--text-light);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 700;
+            box-shadow: 0 4px #6A0A2F;
+            border: 1px solid #C70039;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        .logout-btn:hover {
+            background-color: #C70039;
+        }
+        .logout-btn:active {
+            box-shadow: 0 2px #6A0A2F;
+            transform: translateY(2px);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-yellow); /* Light Yellow Title */
+            text-align: center;
+            border-bottom: 3px solid var(--neon-green);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7); /* Yellow Glow */
+        }
+        h1 span {
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Green Glow */
+        }
+
+        /* Input Section */
+        .input-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            background-color: rgba(0, 255, 0, 0.05); /* Very slight green tint */
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+            align-items: flex-end;
+        }
+        .input-group {
+            flex: 1;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--neon-green);
+            font-family: 'Roboto Mono', monospace;
+            text-transform: uppercase;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-dark);
+            border: 1px solid var(--neon-yellow);
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: var(--text-light);
+            font-family: 'Roboto Mono', monospace;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        /* Button Styling (3D & Neon) */
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 900;
+            transition: all 0.15s ease;
+            height: auto;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            /* Default button style */
+            background-color: var(--neon-green);
+            color: var(--bg-dark); /* Dark text on neon button */
+            box-shadow: 0 6px 0 0 #00A000; /* 3D Real Green Color */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Button 3D/Press Effect */
+        button:active {
+            box-shadow: 0 2px 0 0 #00A000; 
+            transform: translateY(4px); 
+        }
+
+        /* Button Animation (Shimmer/Glow on Hover) */
+        button:hover {
+            background-color: #39FF14; /* Brighter green on hover */
+            box-shadow: 0 6px 0 0 #00A000, var(--shadow-green); /* Add glow on hover */
+        }
+        
+        /* Specific Button Color Overrides */
+        #searchButton { 
+            background-color: var(--neon-green);
+            box-shadow: 0 6px 0 0 #00A000;
+        }
+
+        #clearButton { 
+            background-color: #DC143C; /* Darker red */
+            color: var(--text-light);
+            box-shadow: 0 6px 0 0 #9E0F2B;
+        }
+        #clearButton:hover { 
+            background-color: #FF244D; 
+            box-shadow: 0 6px 0 0 #9E0F2B, 0 0 10px #FF244D;
+        }
+                
+        #downloadPdfButton, #downloadAllPdfButton { 
+            background-color: #0077B6; /* Deep Blue for Download */
+            color: var(--text-light);
+            box-shadow: 0 6px 0 0 #005691;
+        }
+        #downloadPdfButton:hover, #downloadAllPdfButton:hover { 
+            background-color: #00A9FF; 
+            box-shadow: 0 6px 0 0 #005691, 0 0 10px #00A9FF;
+        }
+        
+        /* NEW TXT Button Styling */
+        #downloadTxtButton { 
+            background-color: #FF8C00; /* Dark Orange */
+            color: var(--bg-dark);
+            box-shadow: 0 6px 0 0 #CC7000;
+        }
+        #downloadTxtButton:hover { 
+            background-color: #FFA500; /* Brighter Orange */
+            box-shadow: 0 6px 0 0 #CC7000, 0 0 10px #FFA500;
+        }
+
+
+        #viewPdfButton { 
+            background-color: var(--neon-yellow); /* Yellow for View */
+            color: var(--bg-dark);
+            box-shadow: 0 6px 0 0 #D1B000;
+        }
+        #viewPdfButton:hover { 
+            background-color: #FFFF55; 
+            box-shadow: 0 6px 0 0 #D1B000, var(--shadow-yellow);
+        }
+
+        #printButton { 
+            background-color: #8A2BE2; /* Violet for Print */
+            color: var(--text-light);
+            box-shadow: 0 6px 0 0 #5E1DA8;
+        }
+        #printButton:hover { 
+            background-color: #9933FF; 
+            box-shadow: 0 6px 0 0 #5E1DA8, 0 0 10px #9933FF;
+        }
+
+        .delete-btn {
+            background-color: #DC143C; 
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            height: auto;
+            border-radius: 3px;
+            box-shadow: 0 3px 0 0 #9E0F2B; 
+        }
+        .delete-btn:active {
+            box-shadow: 0 1px 0 0 #9E0F2B;
+            transform: translateY(2px);
+        }
+
+        /* Dashboard Output Styling */
+        .dashboard-output {
+            margin-top: 30px;
+            padding-top: 10px;
+        }
+        .race-type-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(0, 255, 0, 0.03); /* Subtle green background for sections */
+            border: 1px solid var(--neon-green);
+            box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.3);
+            page-break-inside: avoid;
+        }
+        .race-type-title {
+            background-color: var(--neon-green);
+            color: var(--bg-dark);
+            padding: 12px 18px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.4em;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--neon-yellow);
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .result-table th, .result-table td {
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9em;
+            color: var(--text-light);
+            font-family: 'Roboto Mono', monospace;
+        }
+        .result-table th {
+            background-color: rgba(255, 215, 0, 0.2); /* Light yellow header background */
+            color: var(--neon-yellow);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+        .result-table td:last-child {
+            width: 80px; 
+            text-align: center;
+        }
+        .result-table tr:nth-child(even) {
+            background-color: rgba(0, 255, 0, 0.02); /* Alternating row stripe */
+        }
+        .result-table tr:hover {
+            background-color: rgba(0, 255, 0, 0.1);
+            outline: 1px solid var(--neon-green);
+        }
+        
+        #initialMessage {
+            background: rgba(255, 215, 0, 0.1) !important;
+            color: var(--neon-yellow) !important;
+            border: 1px dashed var(--neon-yellow);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        }
+
+        /* PDF specific styles */
+        .pdf-output-data {
+            font-family: 'Roboto Mono', monospace; 
+            white-space: pre; 
+            margin-top: 0px; 
+            line-height: 1.5;
+            padding: 10px;
+            font-size: 11px;
+            color: #000; /* Ensure black text for printing */
+            background: #fff;
+        }
+        .pdf-race-title {
+            color: #000;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #000;
+        }
+        
+        /* CSS for print/PDF consistency */
+        @media print {
+            body { 
+                background-color: white !important; 
+                color: black !important;
+                background-image: none !important;
+                animation: none !important;
+                padding: 0 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                background: white !important;
+            }
+            button, .input-section, .header-top, #downloadSearchPdfContainer, #searchResultsHeading { 
+                display: none !important; 
+            }
+            h1 { color: #000 !important; text-shadow: none !important; }
+            .race-type-section { 
+                border: 1px solid #000 !important; 
+                box-shadow: none !important;
+                background: white !important;
+            }
+            .race-type-title { 
+                background-color: #ccc !important; 
+                color: #000 !important;
+                border-bottom: 2px solid #000 !important;
+            }
+            .result-table th {
+                background-color: #ddd !important;
+                color: #000 !important;
+                text-shadow: none !important;
+            }
+            .result-table td {
+                background: white !important;
+                color: #000 !important;
+            }
+            .delete-btn { display: none !important; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="container">
+    
+    <div class="header-top">
+        <span id="sriLankaDate" class="sri-lanka-date"></span>
+        <button id="logoutButton" class="logout-btn" onclick="alert('Logging out...')">Logout</button>
+    </div>
+
+    <h1>
+        <span style="font-size: 1.2em; margin-right: 15px;"> </span>
+
+Australian Horse Racing Codes (ISO 3166) </h1>
+
+    <div class="input-section">
+        <div class="input-group">
+            <label for="titleInput">TITLE (Course Name)</label>
+            <input type="text" id="titleInput" placeholder="E.g., BENDIGO, GAWLER, BLACKALL, LEINSTER (use comma for multiple)">
+        </div>
+        <div class="input-group">
+            <label for="raceTypeSelect">RACE TYPE</label>
+            <select id="raceTypeSelect">
+                <option value="ALL">ALL</option>
+                <option value="THOROUGHBREDS">THOROUGHBREDS</option>
+                <option value="HARNESS">HARNESS</option>
+                <option value="GREYHOUNDS">GREYHOUNDS</option>
+            </select>
+        </div>
+        <button id="searchButton" onclick="searchData()">🔍 Search</button>
+        <button id="clearButton" onclick="clearAllData()">❌ Clear All</button>
+        <button id="downloadAllPdfButton" onclick="downloadAllDataAsPdf()">📥 Download FULL PDF</button>
+    </div>
+
+    <div id="pdfContent">
+        <h2 id="searchResultsHeading">📊 Search Results </h2>
+        <div class="dashboard-output" id="outputDashboard">
+            <p id="initialMessage" style="text-align: center; color: #777; padding: 20px; background: #f0f0f0; border-radius: 4px;">Enter a TITLE and RACE TYPE and click 'Search' to view results.</p>
+        </div>
+    </div>
+    
+    <div id="downloadSearchPdfContainer" style="text-align: center; margin-top: 20px;">
+        <button id="viewPdfButton" onclick="viewPdf()" style="display: none;">
+            👁️ View Search KEYS PDF
+        </button>
+        <button id="downloadPdfButton" onclick="downloadPdf()" style="display: none;">📥 Download KEYS PDF</button>
+        <button id="downloadTxtButton" onclick="downloadTxt()" style="display: none;">💾 Download KEYS TXT</button>
+        <button id="printButton" onclick="window.print()">🖨️ Print Page</button>
+    </div>
+
+</div>
+
+<script>
+    // Global variable to store all entries currently displayed on the dashboard
+    let currentDisplayedData = [];
+
+    // ----------------------------------------------------------------------------------
+    // *** Data Extracted and Cleaned from your PDF ***
+    const rawCourseData = [
+      
+                // MIT AGCN License = Use it freely, just give credit
+
+  // PAGE 12
+
+        
+    { title: "WENTWORTH PARK",         state: "NSW", code: "WWPG", type: "THOROUGHBREDS" },
+    { title: "GLOUCESTER PARK",        state: "QLD", code: "GLPR", type: "THOROUGHBREDS" },
+
+
+
+    // page one 20 codes
+
+
+    { title: "Q1 LAKESIDE",     state: "QLD", code: "QLEG", type: "GREYHOUNDS" },
+    { title: "Q2 PARKLANDS",    state: "QLD", code: "QPDG", type: "GREYHOUNDS" },
+    { title: "BLACKALL",        state: "QLD", code: "BLKR", type: "THOROUGHBREDS" },
+    { title: "MOUNT MAGNET",    state: "QLD", code: "MMGR", type: "THOROUGHBREDS" },
+    { title: "LEINSTER",        state: "QLD", code: "LNSR", type: "THOROUGHBREDS" },
+
+
+    { title: "Q STRAIGHT",      state: "QLD", code: "QSTG", type: "GREYHOUNDS" },
+    { title: "CAPALABA",        state: "QLD", code: "CPLG", type: "GREYHOUNDS" },
+    { title: "BOWEN",           state: "QLD", code: "BOWR", type: "THOROUGHBREDS" },
+    { title: "BARCALDINE",      state: "QLD", code: "BCDR", type: "GREYHOUNDS" },
+    { title: "HOME HILL",       state: "QLD", code: "HEHR", type: "THOROUGHBREDS" },
+
+    { title: "MOUNT ISA",       state: "QLD", code: "MIAR", type: "THOROUGHBREDS" },
+    { title: "MARBURG",         state: "QLD", code: "MBGH", type: "HARNESS" },
+    { title: "EWAN",            state: "QLD", code: "EWAR", type: "HARNESS" },
+    { title: "CLONCURRY",       state: "QLD", code: "CLCR", type: "HARNESS" },
+    { title: "LAVERTON",        state: "QLD", code: "LVTR", type: "HARNESS" },
+
+    { title: "THANGOOL",        state: "QLD", code: "THGR", type: "HARNESS" },
+    { title: "BIRCHIP",         state: "VIC", code: "BCPH", type: "HARNESS" },
+    { title: "CHINCHILLA",      state: "QLD", code: "CNHR", type: "THOROUGHBREDS" },
+    { title: "LONGREACH",       state: "QLD", code: "LRHR", type: "HARNESS" },
+    { title: "BIRDSVILLE",      state: "QLD", code: "BDVR", type: "THOROUGHBREDS" },
+
+    // page two 24 codes (1page)
+
+
+    { title: "ARARAT",         state: "VIC", code: "ARAH", type: "HARNESS" },
+    { title: "ARARAT",         state: "VIC", code: "ARAR", type: "THOROUGHBREDS" },
+    { title: "AVOR",           state: "VIC", code: "AVOR", type: "THOROUGHBREDS" },
+    { title: "BAIRNSDALE",      state: "VIC", code: "BDAR", type: "THOROUGHBREDS" },
+    { title: "CAULFIELD",       state: "VIC", code: "CAUR", type: "THOROUGHBREDS" },
+
+    { title: "CRANBOURNE",      state: "VIC", code: "CRBG", type: "GREYHOUNDS" },
+    { title: "FLEMINGTON",      state: "VIC", code: "FLMR", type: "THOROUGHBREDS" },
+    { title: "HAMILTON",        state: "VIC", code: "HAMR", type: "THOROUGHBREDS" },
+    { title: "MILDURA",         state: "VIC", code: "MDUH", type: "HARNESS" },
+
+    { title: "BATHURST",       state: "NSW", code: "BATG", type: "GREYHOUNDS" },
+    { title: "BATHURST",       state: "NSW", code: "BATR", type: "THOROUGHBREDS" },
+    { title: "BROKEN HILL",    state: "NSW", code: "BRHH", type: "HARNESS" },
+
+
+    // page two 24 codes (2page)
+
+
+    { title: "RANDWICK",       state: "NSW", code: "RANR", type: "THOROUGHBREDS" },
+    { title: "ALBION PARK",    state: "QLD", code: "ABPR", type: "THOROUGHBREDS" },
+    { title: "CAIRNS",          state: "QLD", code: "CNSR", type: "HARNESS" },
+    { title: "MACKAY",         state: "QLD", code: "MACR", type: "THOROUGHBREDS" },
+    { title: "BALAKLAVA",    state: "QLD", code: "BVAR", type: "THOROUGHBREDS" },
+    { title: "MORPHETTVILLE", state: "QLD", code: "MPHR", type: "THOROUGHBREDS" },
+
+    // page two 24 codes (3page)
+
+    { title: "PORT PIRIE",       state: "QLD", code: "PTPG", type: "GREYHOUNDS" },
+    { title: "VICTORIA PARK",    state: "QLD", code: "VIPR", type: "THOROUGHBREDS" },
+
+    { title: "MOWBRAY",       state: "VIC", code: "MOWR", type: "THOROUGHBREDS" },
+    { title: "KALGOORLIE",    state: "QLD", code: "KALR", type: "THOROUGHBREDS" },
+    { title: "KALGOORLIE",    state: "QLD", code: "KALH", type: "HARNESS" },
+    { title: "DARWIN",        state: "QLD", code: "DARR", type: "THOROUGHBREDS" },
+
+
+    { title: "DARWIN",      state: "QLD", code: "DARG", type: "GREYHOUNDS" },
+    { title: "CANBERRA",    state: "NSW", code: "CNBR", type: "THOROUGHBREDS" },
+    { title: "CANBERRA",    state: "NSW", code: "CNBG", type: "GREYHOUNDS" },
+    { title: "CANBERRA",    state: "NSW", code: "CNBH", type: "HARNESS" },
+
+
+    // PAGE 1-2 PAGE 3-4
+
+    { title: "ARARAT",      state: "VIC", code: "ARAH", type: "HARNESS" },
+    { title: "ARARAT",      state: "VIC", code: "ARAR", type: "THOROUGHBREDS" },
+    { title: "AVOCA",       state: "VIC", code: "AVOR", type: "THOROUGHBREDS" },
+    { title: "BALNARRING",  state: "VIC", code: "BNGR", type: "THOROUGHBREDS" },
+
+
+    { title: "BAIRNSDALE",  state: "VIC", code: "BDAR", type: "THOROUGHBREDS" },
+    { title: "BENDIGO",     state: "VIC", code: "BENG", type: "GREYHOUNDS" },
+    { title: "BENDIGO",     state: "VIC", code: "BENR", type: "THOROUGHBREDS" },
+    { title: "BENALLA",     state: "VIC", code: "BNLR", type: "THOROUGHBREDS" },
+    { title: "BOORT",       state: "VIC", code: "BRTH", type: "HARNESS" },
+    { title: "CAMPERDOWN",  state: "VIC", code: "CAMR", type: "THOROUGHBREDS" },
+    { title: "CASTERTON",   state: "VIC", code: "CASR", type: "THOROUGHBREDS" },
+    { title: "CAULFIELD",   state: "VIC", code: "CAUR", type: "THOROUGHBREDS" },
+    { title: "CHARLTON",    state: "VIC", code: "CHLH", type: "HARNESS" },
+
+
+    { title: "COBRAM",      state: "VIC", code: "COBH", type: "HARNESS" },
+    { title: "COLAC",       state: "VIC", code: "COLR", type: "THOROUGHBREDS" },
+    { title: "COLERAINE",   state: "VIC", code: "CLRR", type: "THOROUGHBREDS" },
+    { title: "CRANBOURNE",  state: "VIC", code: "CRBG", type: "GREYHOUNDS" },
+    { title: "CRANBOURNE",  state: "VIC", code: "CRBH", type: "HARNESS" },
+    { title: "CRANBOURNE",  state: "VIC", code: "CRBR", type: "THOROUGHBREDS" },
+    { title: "DONALD",      state: "VIC", code: "DONR", type: "THOROUGHBREDS" },
+    { title: "ECHUCA",      state: "VIC", code: "ECHH", type: "HARNESS" },
+    { title: "ECHUCA",      state: "VIC", code: "ECHR", type: "THOROUGHBREDS" },
+    { title: "EDENHOPE",    state: "VIC", code: "EDER", type: "THOROUGHBREDS" },
+
+
+    { title: "FLEMINGTON",      state: "VIC", code: "FLMR", type: "THOROUGHBREDS" },
+    { title: "GREAT WESTERN",   state: "VIC", code: "GWNR", type: "THOROUGHBREDS" },
+    { title: "GUNBOWER",        state: "VIC", code: "GUNH", type: "HARNESS" },
+    { title: "GUNBOWER",        state: "VIC", code: "GUNR", type: "THOROUGHBREDS" },
+    { title: "HAMILTON",        state: "VIC", code: "HAMR", type: "THOROUGHBREDS" },
+    { title: "HAMILTON",        state: "VIC", code: "HAMH", type: "HARNESS" },
+    { title: "HANGING ROCK",    state: "VIC", code: "HRKR", type: "THOROUGHBREDS" },
+    { title: "KERANG",       state: "VIC", code: "KERR", type: "THOROUGHBREDS" },
+
+
+    { title: "ARMIDALE",     state: "NSW", code: "ARMR", type: "THOROUGHBREDS" },
+    { title: "ARMIDALE",     state: "NSW", code: "ARMH", type: "HARNESS" },
+    { title: "BALLINA",      state: "NSW", code: "BLIR", type: "THOROUGHBREDS" },
+    { title: "BANKSTOWN",    state: "NSW", code: "BANH", type: "HARNESS" },
+    { title: "BATHURST",     state: "NSW", code: "BATG", type: "GREYHOUNDS" },
+    { title: "BATHURST",     state: "NSW", code: "BATR", type: "THOROUGHBREDS" },
+    { title: "BERRIGAN",     state: "NSW", code: "BERR", type: "THOROUGHBREDS" },
+    { title: "BOWRAVILLE",   state: "NSW", code: "BVLR", type: "THOROUGHBREDS" },
+    { title: "BROKEN HILL",  state: "NSW", code: "BRHH", type: "HARNESS" },
+
+    { title: "CANBERRA",      state: "ACT", code: "CNBG", type: "GREYHOUNDS" },
+    { title: "CANBERRA",      state: "ACT", code: "CNBH", type: "HARNESS" },
+    { title: "CANBERRA",      state: "ACT", code: "CNBR", type: "THOROUGHBREDS" },
+    { title: "CESSNOCK",      state: "NSW", code: "CESG", type: "GREYHOUNDS" },
+
+
+    { title: "CESSNOCK",         state: "NSW", code: "CESR", type: "THOROUGHBREDS" },
+    { title: "COFFS HARBOUR",    state: "NSW", code: "COFR", type: "THOROUGHBREDS" },
+    { title: "COONABARABRAN",    state: "NSW", code: "CBRR", type: "THOROUGHBREDS" },
+    { title: "COONAMBLE",        state: "NSW", code: "CONR", type: "THOROUGHBREDS" },
+    { title: "COOTAMUNDRA",      state: "NSW", code: "CTMR", type: "THOROUGHBREDS" },
+    { title: "COOTAMUNDRA",      state: "NSW", code: "CTMH", type: "HARNESS" },
+    { title: "COROWA",           state: "NSW", code: "CORR", type: "THOROUGHBREDS" },
+    { title: "COWRA",            state: "NSW", code: "CWRR", type: "THOROUGHBREDS" },
+    { title: "COWRA",            state: "NSW", code: "CWRH", type: "HARNESS" },
+    { title: "DAPTO",            state: "NSW", code: "DAPG", type: "GREYHOUNDS" },
+
+    { title: "FAIRFIELD",  state: "NSW", code: "FFDH", type: "HARNESS" },
+    { title: "FORBES",     state: "NSW", code: "FORR", type: "THOROUGHBREDS" },
+    { title: "FORBES",       state: "NSW", code: "FORH", type: "HARNESS" },
+    { title: "GILGANDRA",    state: "NSW", code: "GGAR", type: "THOROUGHBREDS" },
+    { title: "GLEN INNES",   state: "NSW", code: "GNIR", type: "THOROUGHBREDS" },
+    { title: "GOULBURN",     state: "NSW", code: "GBNR", type: "THOROUGHBREDS" },
+    { title: "GOULBURN",     state: "NSW", code: "GBNG", type: "GREYHOUNDS" },
+    { title: "GOULBURN",     state: "NSW", code: "GBNH", type: "HARNESS" },
+    { title: "GUNDAGAI",     state: "NSW", code: "GDIR", type: "THOROUGHBREDS" },
+
+
+    { title: "GULGONG",      state: "NSW", code: "GLGR", type: "THOROUGHBREDS" },
+    { title: "HAWKESBURY",   state: "NSW", code: "HAWR", type: "THOROUGHBREDS" },
+    { title: "HAROLD PARK",   state: "NSW", code: "HPKH", type: "HARNESS" },
+    { title: "INVERELL",      state: "NSW", code: "IVLR", type: "THOROUGHBREDS" },
+
+    // PAGE 15
+
+    { title: "MTISA",         state: "QLD", code: "MIAR", type: "THOROUGHBREDS" },
+    { title: "CHARLEVILLE",   state: "QLD", code: "CHAR", type: "THOROUGHBREDS" },
+    { title: "ESPERANCE",     state: "QLD", code: "ESPR", type: "THOROUGHBREDS" },
+    { title: "INNISFAIL",     state: "QLD", code: "INNR", type: "THOROUGHBREDS" },
+    { title: "EMERALD",       state: "QLD", code: "EMAR", type: "THOROUGHBREDS" },
+
+    { title: "TOODYAY",      state: "QLD", code: "TOOR", type: "THOROUGHBREDS" },
+    { title: "ROMA",         state: "QLD", code: "ROMR", type: "THOROUGHBREDS" },
+    { title: "ATHERTON",     state: "QLD", code: "ATHR", type: "THOROUGHBREDS" },
+    { title: "MELTON",       state: "VIC", code: "MLTR", type: "THOROUGHBREDS" },
+    { title: "BROOME",       state: "QLD", code: "BROR", type: "THOROUGHBREDS" },
+
+    { title: "PORT HEDLAND",    state: "QLD", code: "PHDR", type: "THOROUGHBREDS" },
+    { title: "KANGAROO",        state: "QLD", code: "KISR", type: "THOROUGHBREDS" },
+    { title: "KANGAROO  ISL",   state: "QLD", code: "KISR", type: "THOROUGHBREDS" },
+    { title: "WAGIN",           state: "QLD", code: "WGNH", type: "HARNESS" },
+    { title: "KELLERBERRIN",    state: "QLD", code: "KLLH", type: "HARNESS" },
+    { title: "EUGOWRA",         state: "NSW", code: "EUGH", type: "HARNESS" },
+
+
+    { title: "COOLAMON",    state: "NSW", code: "COOH", type: "HARNESS" },
+    { title: "BURNIE",      state: "NSW", code: "BUNHS", type: "HARNESS" },
+    { title: "BLAYNEY",     state: "NSW", code: "BLAH", type: "HARNESS" },
+    { title: "BUSSELTON",   state: "QLD", code: "BUSH", type: "HARNESS" },
+    { title: "NARRABRI",    state: "NSW", code: "NABH", type: "HARNESS" },
+    { title: "WEST WYALONG",    state: "NSW", code: "WWGH", type: "HARNESS" },
+    { title: "CARNARVON",       state: "QLD", code: "CVNR", type: "THOROUGHBREDS" },
+    { title: "BACCHUS MARSH",   state: "VIC", code: "BCMH", type: "HARNESS" },
+    { title: "WHYALLA",         state: "NSW", code: "WHAH", type: "HARNESS" },
+    { title: "ROEBOURNE",       state: "QLD", code: "ROER", type: "THOROUGHBREDS" },
+
+
+    { title: "CARRICK PARK",    state: "VIC", code: "CKPH", type: "HARNESS" },
+    { title: "GOONDIWINDI",     state: "QLD", code: "GOOR", type: "THOROUGHBREDS" },
+    { title: "NTH TERRITORY",   state: "QLD", code: "NTHR", type: "THOROUGHBREDS" },
+    { title: "TUNCURRY",        state: "NSW", code: "TUNR", type: "THOROUGHBREDS" },
+    { title: "CAIRNS",          state: "QLD", code: "CNSG", type: "GREYHOUNDS" },
+    { title: "CUNDERDIN",       state: "QLD", code: "CDNH", type: "HARNESS" },
+
+    // PAGE 14
+
+    { title: "BUNBURY",         state: "QLD", code: "BNYR", type: "THOROUGHBREDS" },
+
+              
+     // PAGE 13
+
+    { title: "PORT PIRIES",     state: "QLD", code: "PTPR", type: "THOROUGHBREDS" },
+    { title: "ROCKHAMPTON",     state: "QLD", code: "ROCG", type: "GREYHOUNDS" },
+    { title: "TOWNSVILLE",      state: "QLD", code: "TWNR", type: "THOROUGHBREDS" },
+    { title: "TOWNSVILLE",      state: "QLD", code: "TWNG", type: "GREYHOUNDS" },
+    { title: "REDCLIFFE",       state: "QLD", code: "REDH", type: "HARNESS" },
+    { title: "CANNINGTON",      state: "QLD", code: "CNPG", type: "GREYHOUNDS" },
+
+
+    // PAGE 12
+
+    { title: "RICHMOND",   state: "NSW", code: "RICG", type: "GREYHOUNDS" },
+    { title: "WENTWORTH PARK",   state: "NSW", code: "WWPG", type: "GREYHOUNDS" },
+    { title: "ANGLE PARK",   state: "QLD", code: "ANGG", type: "GREYHOUNDS" },
+    { title: "MOUNT GAMBIER",   state: "QLD", code: "MTGG", type: "GREYHOUNDS" },
+
+     // PAGE 11
+
+
+    { title: "DUBBO",    state: "NSW", code: "DBOG", type: "GREYHOUNDS" },
+    { title: "DUBBO",       state: "NSW", code: "DBOH", type: "HARNESS" },
+    { title: "DUBBO",       state: "NSW", code: "DBOR", type: "THOROUGHBREDS" },
+    { title: "GOSFORD",   state: "NSW", code: "GOSG", type: "GREYHOUNDS" },
+    { title: "GOSFORD",   state: "NSW", code: "GOSH", type: "HARNESS" },
+    { title: "GOSFORD",   state: "NSW", code: "GOSR", type: "THOROUGHBREDS" },
+    { title: "GOULBURNS",   state: "NSW", code: "GBNR", type: "THOROUGHBREDS" },
+    { title: "GRAFTON",   state: "NSW", code: "GRAG", type: "GREYHOUNDS" },
+    { title: "GRAFTON",   state: "NSW", code: "GRAR", type: "THOROUGHBREDS" },
+
+    { title: "GUNNEDAH",   state: "NSW", code: "GDHR", type: "THOROUGHBREDS" },
+    { title: "GUNNEDAH",   state: "NSW", code: "GDHG", type: "GREYHOUNDS" },
+
+    { title: "LEETON",   state: "NSW", code: "LTNR", type: "THOROUGHBREDS" },
+    { title: "LISMORE",   state: "NSW", code: "LSMG", type: "GREYHOUNDS" },
+    { title: "LISMORE",   state: "NSW", code: "LSMR", type: "THOROUGHBREDS" },
+    { title: "LITHGOW",   state: "NSW", code: "LITH", type: "HARNESS" },
+    { title: "MAITLAND",   state: "NSW", code: "MTLG", type: "GREYHOUNDS" },
+    { title: "MAITLAND",   state: "NSW", code: "MTLH", type: "HARNESS" },
+    { title: "MOREE",   state: "NSW", code: "MRER", type: "THOROUGHBREDS" },
+    { title: "MORUYA",   state: "NSW", code: "MYAR", type: "THOROUGHBREDS" },
+    { title: "MUDGEE",   state: "NSW", code: "MGER", type: "THOROUGHBREDS" },
+
+    { title: "MURWILLUMBAH",   state: "NSW", code: "MWHR", type: "THOROUGHBREDS" },
+    { title: "MUSWELLBROOK",   state: "NSW", code: "MUSR", type: "THOROUGHBREDS" },
+    { title: "MUSWELLBROOK",   state: "NSW", code: "MUSH", type: "HARNESS" },
+    { title: "NARROMINE",   state: "NSW", code: "NRMR", type: "THOROUGHBREDS" },
+
+    // PAGE 10
+
+    { title: "ST ARNAUD",   state: "VIC", code: "STAH", type: "HARNESS" },
+    { title: "ST ARNAUD",   state: "VIC", code: "STAR", type: "THOROUGHBREDS" },
+    { title: "STAWELL",   state: "VIC", code: "STWH", type: "HARNESS" },
+
+    { title: "STAWELL",   state: "VIC", code: "STWR", type: "THOROUGHBREDS" },
+    { title: "STONY CREEK",   state: "VIC", code: "STCR", type: "THOROUGHBREDS" },
+    { title: "SWAN HILL",   state: "VIC", code: "SWNR", type: "THOROUGHBREDS" },
+    { title: "SWAN HIL",   state: "VIC", code: "SWNH", type: "HARNESS" },
+    { title: "ENTER",   state: "VIC", code: "NEWR", type: "THOROUGHBREDS" },
+
+    { title: "TATURA",   state: "VIC", code: "TATR", type: "THOROUGHBREDS" },
+    { title: "TERANG",   state: "VIC", code: "TERH", type: "HARNESS" },
+    { title: "TERANG",   state: "VIC", code: "TERR", type: "THOROUGHBREDS" },
+    { title: "TOWONG",   state: "VIC", code: "TOWR", type: "THOROUGHBREDS" },
+    { title: "TRARALGON",   state: "VIC", code: "TRLG", type: "GREYHOUNDS" },
+
+    { title: "TRARALGON",   state: "VIC", code: "TRLR", type: "THOROUGHBREDS" },
+    { title: "WANGARATTA",   state: "VIC", code: "WANG", type: "GREYHOUNDS" },
+    { title: "WANGARATTA",   state: "VIC", code: "WANH", type: "HARNESS" },
+    { title: "WANGARATTA",   state: "VIC", code: "WANR", type: "THOROUGHBREDS" },
+
+    { title: "WARRACKNABEAL",   state: "VIC", code: "WKNR", type: "THOROUGHBREDS" },
+
+    { title: "WEDDERBURN",   state: "VIC", code: "WDBH", type: "HARNESS" },
+    { title: "WODONGA",   state: "VIC", code: "WODR", type: "THOROUGHBREDS" },
+    { title: "WOOLAMAI",   state: "VIC", code: "WMIR", type: "THOROUGHBREDS" },
+    { title: "WYCHEPROOF",   state: "VIC", code: "WPFR", type: "THOROUGHBREDS" },
+
+    { title: " SANDOWN PARK",   state: "VIC", code: "SANG", type: "GREYHOUNDS" },
+    { title: "ARMIDALE",   state: "NSW", code: "ARMR", type: "THOROUGHBREDS" },
+    { title: "ARMIDALE",   state: "NSW", code: "ARMH", type: "HARNESS" },
+    { title: "BALLINA",   state: "NSW", code: "BLIR", type: "THOROUGHBREDS" },
+
+
+    { title: "BANKSTOWN",   state: "NSW", code: "BANH", type: "HARNESS" },
+    { title: "BATHURST",   state: "NSW", code: "BATG", type: "GREYHOUNDS" },
+    { title: "BATHURST",   state: "NSW", code: "BATH", type: "HARNESS" },
+    { title: "BATHURST",   state: "NSW", code: "BATR", type: "THOROUGHBREDS" },
+    { title: "BERRIGAN",   state: "NSW", code: "BERR", type: "THOROUGHBREDS" },
+    { title: "BOWRAVILLE",   state: "NSW", code: "BVLR", type: "THOROUGHBREDS" },
+
+    { title: "BROKEN HILL",   state: "NSW", code: "BRHR", type: "THOROUGHBREDS" },
+    { title: "BROKEN HILL",   state: "NSW", code: "BRHH", type: "HARNESS" },
+    { title: "BULLI",   state: "NSW", code: "BULG", type: "GREYHOUNDS" },
+    { title: "BULLI",   state: "NSW", code: "BULH", type: "HARNESS" },
+    { title: "CANBERRA",   state: "NSW", code: "CNBG", type: "GREYHOUNDS" },
+
+    { title: "CANBERRA",   state: "NSW", code: "CNBH", type: "HARNESS" },
+    { title: "CANBERRA",   state: "NSW", code: "CNBR", type: "THOROUGHBREDS" },
+    { title: "CANTERBURY",   state: "NSW", code: "CBYR", type: "THOROUGHBREDS" },
+    { title: "CASINO",   state: "NSW", code: "CSOG", type: "GREYHOUNDS" },
+    { title: "CASINO",   state: "NSW", code: "CSOR", type: "THOROUGHBREDS" },
+
+    { title: "CESSNOCK",   state: "NSW", code: "CESG", type: "GREYHOUNDS" },
+    { title: "CESSNOCK",   state: "NSW", code: "CESR", type: "THOROUGHBREDS" },
+
+
+    // PAGE 9
+
+    { title: "BENDIGO",   state: "VIC", code: "BENR", type: "THOROUGHBREDS" },
+    { title: "BENALLA",   state: "VIC", code: "BNLR", type: "HARNESS" },
+    { title: "CAMPERDOWN",   state: "VIC", code: "CAMR", type: "THOROUGHBREDS" },
+    { title: "CASTERTON",   state: "VIC", code: "CASR", type: "THOROUGHBREDS" },
+    { title: "CAULFIELD",   state: "VIC", code: "CAUR", type: "THOROUGHBREDS" },
+    { title: "CHARLTON",   state: "VIC", code: "CHLH", type: "HARNESS" },
+
+    { title: "COBRAM",   state: "VIC", code: "COBH", type: "HARNESS" },
+    { title: "COLAC",   state: "VIC", code: "COLR", type: "THOROUGHBREDS" },
+    { title: "COLERAINE",   state: "VIC", code: "CLRR", type: "THOROUGHBREDS" },
+    { title: "CRANBOURNE",   state: "VIC", code: "CRBG", type: "GREYHOUNDS" },
+    { title: "CRANBOURNE",   state: "VIC", code: "CRBH", type: "HARNESS" },
+
+    { title: "CRANBOURNE",   state: "VIC", code: "CRBR", type: "THOROUGHBREDS" },
+    { title: "DONALD",   state: "VIC", code: "DONR", type: "THOROUGHBREDS" },
+    { title: "ECHUCA",   state: "VIC", code: "ECHH", type: "HARNESS" },
+    { title: "ECHUCA",   state: "VIC", code: "ECHR", type: "THOROUGHBREDS" },
+    { title: "EDENHOPE",   state: "VIC", code: "EDER", type: "THOROUGHBREDS" },
+    { title: "FLEMINGTON",   state: "VIC", code: "FLMR", type: "THOROUGHBREDS" },
+
+    { title: "GEELONG",   state: "VIC", code: "GELG", type: "GREYHOUNDS" },
+    { title: "GEELONG",   state: "VIC", code: "GELH", type: "HARNESS" },
+    { title: "GEELONG",   state: "VIC", code: "GELR", type: "THOROUGHBREDS" },
+    { title: "GREAT WESTERN",   state: "VIC", code: "GWNR", type: "THOROUGHBREDS" },
+    { title: "GUNBOWER",   state: "VIC", code: "GUNH", type: "HARNESS" },
+    { title: "GUNBOWER",   state: "VIC", code: "GUNR", type: "THOROUGHBREDS" },
+
+    { title: "HAMILTON",   state: "VIC", code: "HAMR", type: "THOROUGHBREDS" },
+    { title: "HAMILTON",   state: "VIC", code: "HAMH", type: "HARNESS" },
+    { title: "HANGING ROCK",   state: "VIC", code: "HRKR", type: "THOROUGHBREDS" },
+    { title: "HORSHAM",   state: "VIC", code: "HORG", type: "GREYHOUNDS" },
+    { title: "HORSHAM",   state: "VIC", code: "HORH", type: "HARNESS" },
+    { title: "HORSHAM",   state: "VIC", code: "HORR", type: "THOROUGHBREDS" },
+
+    { title: "KERANG",   state: "VIC", code: "KERR", type: "THOROUGHBREDS" },
+    { title: "KILMORE",   state: "VIC", code: "KILH", type: "HARNESS" },
+    { title: "KYNETON",   state: "VIC", code: "KYNR", type: "THOROUGHBREDS" },
+    { title: "MANANGATANG",   state: "VIC", code: "MANR", type: "THOROUGHBREDS" },
+
+    { title: "MILDURA",   state: "VIC", code: "MDUR", type: "THOROUGHBREDS" },
+    { title: "MOE",   state: "VIC", code: "MOER", type: "THOROUGHBREDS" },
+    { title: "MOONEE VALLEY",   state: "VIC", code: "MVAH", type: "HARNESS" },
+    { title: "MOONEE VALLEY",   state: "VIC", code: "MVAR", type: "THOROUGHBREDS" },
+    { title: "MORTLAKE",   state: "VIC", code: "MLKR", type: "THOROUGHBREDS" },
+
+    { title: "MURTOA",   state: "VIC", code: "MURR", type: "THOROUGHBREDS" },
+    { title: "NHILL",   state: "VIC", code: "NHLR", type: "THOROUGHBREDS" },
+    { title: "NYAH",   state: "VIC", code: "NYAH", type: "HARNESS" },
+    { title: "OUYEN",   state: "VIC", code: "OUYH", type: "HARNESS" },
+    { title: "PAKENHAM",   state: "VIC", code: "PAKR", type: "THOROUGHBREDS" },
+
+    { title: "PENSHURST",   state: "VIC", code: "PNHR", type: "THOROUGHBREDS" },
+    { title: "SALE",   state: "VIC", code: "SALG", type: "GREYHOUNDS" },
+    { title: "SALE",   state: "VIC", code: "SALR", type: "THOROUGHBREDS" },
+    { title: "SANDOWN",   state: "VIC", code: "SANR", type: "THOROUGHBREDS" },
+    { title: "SEYMOUR",   state: "VIC", code: "SEYR", type: "THOROUGHBREDS" },
+
+
+    // PAGE 8
+
+
+    { title: "VICTOR HARBOR",   state: "QLD", code: "VCHH", type: "HARNESS" },
+    { title: "DEAGON",   state: "QLD", code: "DEAH", type: "HARNESS" },
+    { title: "DEAGON",   state: "QLD", code: "DEAR", type: "THOROUGHBREDS" },
+    { title: "MT ISA",   state: "QLD", code: "MIAR", type: "THOROUGHBREDS" },
+    { title: "CHARLEVILLE",   state: "QLD", code: "CHAR", type: "THOROUGHBREDS" },
+    { title: "ESPERANCE",   state: "QLD", code: "ESPR", type: "THOROUGHBREDS" },
+
+    { title: "INNISFAIL",   state: "QLD", code: "INNR", type: "THOROUGHBREDS" },
+    { title: "EMERALD",   state: "QLD", code: "EMAR", type: "THOROUGHBREDS" },
+    { title: "TOODYAY",   state: "QLD", code: "TOOR", type: "THOROUGHBREDS" },
+    { title: "ROMA",   state: "QLD", code: "ROMR", type: "THOROUGHBREDS" },
+    { title: "ATHERTON",   state: "QLD", code: "ATHR", type: "THOROUGHBREDS" },
+
+    { title: "MELTON",   state: "VIC", code: "MLTH", type: "HARNESS" },
+    { title: "BROOME",   state: "QLD", code: "BROR", type: "THOROUGHBREDS" },
+    { title: "PORT HEDLAND",   state: "QLD", code: "PHDR", type: "THOROUGHBREDS" },
+    { title: "KANGAROO ISL",   state: "QLD", code: "KISR", type: "THOROUGHBREDS" },
+    { title: "WAGIN",   state: "QLD", code: "WGNH", type: "HARNESS" },
+    { title: "KELLERBERRIN",   state: "QLD", code: "KLLH", type: "HARNESS" },
+
+    { title: "EUGOWRA",   state: "NSW", code: "EUGH", type: "HARNESS" },
+    { title: "COOLAMON",   state: "NSW", code: "COOH", type: "HARNESS" },
+    { title: "BURNIE",   state: "VIC", code: "BUNH", type: "HARNESS" },
+    { title: "BLAYNEY",   state: "NSW", code: "BLAH", type: "HARNESS" },
+    { title: "BUSSELTON",   state: "QLD", code: "BUSH", type: "HARNESS" },
+    { title: "NARRABRI",   state: "NSW", code: "NABH", type: "HARNESS" },
+
+    { title: "WEST WYALONG",   state: "NSW", code: "WWGH", type: "HARNESS" },
+    { title: "CARNARVON",   state: "QLD", code: "CVNR", type: "THOROUGHBREDS" },
+    { title: "BACCHUS MARSH ",   state: "VIC", code: "BCMH", type: "HARNESS" },
+    { title: "WHYALLA",   state: "QLD", code: "WHAH", type: "HARNESS" },
+    { title: "ROEBOURNE",   state: "QLD", code: "ROER", type: "THOROUGHBREDS" },
+    { title: "CARRICK PARK",   state: "VIC", code: "CKPH", type: "HARNESS" },
+
+    { title: "GOONDIWINDI",   state: "QLD", code: "GOOR", type: "THOROUGHBREDS" },
+    { title: "QUEENSLAND",   state: "QLD", code: "QLDR", type: "THOROUGHBREDS" },
+    { title: "TERRITORY",   state: "QLD", code: "NTHR", type: "THOROUGHBREDS" },
+    { title: "TUNCURRY",   state: "NSW", code: "TUNR", type: "THOROUGHBREDS" },
+    { title: "CUNDERDIN",   state: "QLD", code: "CDNH", type: "HARNESS" },
+
+    { title: "DENILIQUIN",   state: "NSW", code: "DEQR", type: "THOROUGHBREDS" },
+    { title: "YEPPOON",   state: "QLD", code: "YPNR", type: "THOROUGHBREDS" },
+    { title: "SCOTTSDALE",   state: "VIC", code: "SCEH", type: "HARNESS" },
+
+
+    { title: "ARARAT",   state: "VIC", code: "ARAH", type: "HARNESS" },
+    { title: "ARARAT",   state: "VIC", code: "ARAR", type: "THOROUGHBREDS" },
+    { title: "AVOCA",   state: "VIC", code: "AVOR", type: "THOROUGHBREDS" },
+    { title: "BALLARAT",   state: "VIC", code: "BALG", type: "GREYHOUNDS" },
+    { title: "BALLARAT",   state: "VIC", code: "BALH", type: "HARNESS" },
+    { title: "BALLARAT",   state: "VIC", code: "BALR", type: "THOROUGHBREDS" },
+    { title: "BALNARRING",   state: "VIC", code: "BNGR", type: "THOROUGHBREDS" },
+    { title: "BAIRNSDALE",   state: "VIC", code: "BDAR", type: "THOROUGHBREDS" },
+    { title: "BENDIGO",   state: "VIC", code: "BENH", type: "HARNESS" },
+
+
+    // PAGE 7 
+
+    { title: "ALICE SPRINGS",   state: "QLD", code: "ALCR", type: "THOROUGHBREDS" },
+    { title: "GYMPIE",   state: "QLD", code: "GYMR", type: "THOROUGHBREDS" },
+    { title: "SUNSHINE COAST",   state: "QLD", code: "SSCR", type: "THOROUGHBREDS" },
+    { title: "TUMUT",   state: "NSW", code: "TUMR", type: "THOROUGHBREDS" },
+
+
+    { title: "BEENLEIGH",   state: "QLD", code: "BEEG", type: "GREYHOUNDS" },
+    { title: "PINJARRA",   state: "QLD", code: "PJAH", type: "HARNESS" },
+    { title: "PINJARRA",   state: "QLD", code: "PJAR", type: "THOROUGHBREDS" },
+    { title: "THE MEADOWS",   state: "VIC", code: "MEAG", type: "GREYHOUNDS" },
+    { title: "SINGLETON",   state: "NSW", code: "SIGG", type: "GREYHOUNDS" },
+    { title: "BUNDABERG",   state: "QLD", code: "BBGR", type: "THOROUGHBREDS" },
+
+    { title: "ALEXANDRA",   state: "VIC", code: "ALXR", type: "THOROUGHBREDS" },
+    { title: "BURRUMBEET",   state: "VIC", code: "BURR", type: "THOROUGHBREDS" },
+    { title: "DEDERANG",   state: "VIC", code: "DEDR", type: "THOROUGHBREDS" },
+    { title: "DUNKELD",   state: "VIC", code: "DKRR", type: "THOROUGHBREDS" },
+    { title: "HEALESVILLE",   state: "VIC", code: "HSVR", type: "THOROUGHBREDS" },
+    { title: "HEALESVILLE",   state: "VIC", code: "HSVG", type: "GREYHOUNDS" },
+
+    { title: "LONGFORD",   state: "VIC", code: "LONR", type: "THOROUGHBREDS" },
+    { title: "MANSFIELD",   state: "VIC", code: "MSFR", type: "THOROUGHBREDS" },
+    { title: "SAPPHIRE COAST",   state: "NSW", code: "SACR", type: "THOROUGHBREDS" },
+    { title: "YEA",   state: "VIC", code: "YEAR", type: "THOROUGHBREDS" },
+    { title: "BUNBURY",   state: "QLD", code: "BNYH", type: "HARNESS" },
+
+    { title: "MANDURAH",   state: "QLD", code: "MRDG", type: "GREYHOUNDS" },
+    { title: "HARVEY",   state: "QLD", code: "HARH", type: "HARNESS" },
+    { title: "NORTHAM",   state: "QLD", code: "NTMG", type: "GREYHOUNDS" },
+    { title: "NORTHAM",   state: "QLD", code: "NTMH", type: "HARNESS" },
+    { title: "NORTHAM",   state: "QLD", code: "NTMR", type: "THOROUGHBREDS" },
+    { title: "ALBANY",   state: "QLD", code: "ABNH", type: "HARNESS" },
+
+    { title: "ALBANY",   state: "QLD", code: "ABNR", type: "THOROUGHBREDS" },
+    { title: "YORK",   state: "QLD", code: "YORR", type: "HARNESS" },
+    { title: "YORK",   state: "QLD", code: "BNGR", type: "THOROUGHBREDS" },
+    { title: "TEMORA",   state: "NSW", code: "TEMG", type: "GREYHOUNDS" },
+    { title: "TEMORA",   state: "NSW", code: "TEMH", type: "HARNESS" },
+
+    { title: "TWEED HEADS",   state: "NSW", code: "TWHH", type: "HARNESS" },
+
+    { title: "JUNEE",   state: "NSW", code: "JUNH", type: "HARNESS" },
+    { title: "NARRANDERA",   state: "NSW", code: "NRDR", type: "THOROUGHBREDS" },
+    { title: "GRENFELL",   state: "NSW", code: "GRNR", type: "THOROUGHBREDS" },
+    { title: "WARWICK",   state: "QLD", code: "WCKH", type: "HARNESS" },
+    { title: "WARWICK",   state: "QLD", code: "WCKR", type: "THOROUGHBREDS" },
+    { title: "BORDERTOWN",   state: "QLD", code: "BTWR", type: "THOROUGHBREDS" },
+    { title: "YARRA VALLEY",   state: "VIC", code: "YVLH", type: "HARNESS" },
+    { title: "YARRA VALLEY",   state: "VIC", code: "YVLR", type: "THOROUGHBREDS" },
+    { title: "NARROGIN",   state: "QLD", code: "NGNR", type: "THOROUGHBREDS" },
+
+    { title: "NARROGIN",   state: "QLD", code: "NGNH", type: "HARNESS" },
+    { title: "GERALDTON",   state: "QLD", code: "GERH", type: "HARNESS" },
+    { title: "GERALDTON",   state: "QLD", code: "GERR", type: "THOROUGHBREDS" },
+    { title: "MOUNT BARKER",   state: "QLD", code: "MTBR", type: "THOROUGHBREDS" },
+    { title: "DELORAINE",   state: "VIC", code: "DELR", type: "THOROUGHBREDS" },
+    { title: "THE GARDENS",   state: "NSW", code: "GARG", type: "GREYHOUNDS" },
+
+
+    // PAGE 6
+
+    { title: "OAKBANK",   state: "QLD", code: "OAKR", type: "THOROUGHBREDS" },
+    { title: "PENOLA",   state: "QLD", code: "PLAR", type: "THOROUGHBREDS" },
+    { title: "PORT AUGUSTA",   state: "QLD", code: "PTAR", type: "THOROUGHBREDS" },
+    { title: "PORT LINCOLN",   state: "QLD", code: "PTLR", type: "THOROUGHBREDS" },
+    { title: "PORT PIRIE",   state: "QLD", code: "PTPH", type: "HARNESS" },
+    { title: "PORT PIRIE",   state: "QLD", code: "PTPR", type: "THOROUGHBREDS" },
+
+
+    { title: "STRATHALBYN",   state: "QLD", code: "STRG", type: "GREYHOUNDS" },
+    { title: "STRATHALBYN",   state: "QLD", code: "STRH", type: "HARNESS" },
+    { title: "STRATHALBYN",   state: "QLD", code: "STRR", type: "THOROUGHBREDS" },
+    { title: "VICTORIA PARK",   state: "QLD", code: "VIPR", type: "THOROUGHBREDS" },
+
+
+    { title: "ALBION PARK",   state: "QLD", code: "ABKG", type: "GREYHOUNDS" },
+    { title: "ALBION PARK",   state: "QLD", code: "ABKH", type: "HARNESS" },
+    { title: "BEAUDESERT",   state: "QLD", code: "BDTR", type: "THOROUGHBREDS" },
+    { title: "BEAUDESERT",   state: "QLD", code: "BDTH", type: "HARNESS" },
+    { title: "CAIRNS",   state: "QLD", code: "CNSR", type: "THOROUGHBREDS" },
+
+    { title: "DALBY",   state: "QLD", code: "DALR", type: "THOROUGHBREDS" },
+    { title: "DOOMBEN",   state: "QLD", code: "DBNR", type: "THOROUGHBREDS" },
+    { title: "EAGLE FARM",   state: "QLD", code: "EAGR", type: "THOROUGHBREDS" },
+    { title: "ESK",   state: "QLD", code: "ESKR", type: "THOROUGHBREDS" },
+    { title: "GATTON",   state: "QLD", code: "GTNR", type: "THOROUGHBREDS" },
+
+
+    { title: "GOLD COAST",   state: "QLD", code: "GOCG", type: "GREYHOUNDS" },
+    { title: "GOLD COAST",   state: "QLD", code: "GOCH", type: "HARNESS" },
+    { title: "GOLD COAST",   state: "QLD", code: "GOCR", type: "THOROUGHBREDS" },
+    { title: "IPSWICH",   state: "QLD", code: "IPSR", type: "THOROUGHBREDS" },
+
+
+    { title: "KILCOY",   state: "QLD", code: "KOYR", type: "THOROUGHBREDS" },
+    { title: "KILCOY",   state: "QLD", code: "KOYH", type: "HARNESS" },
+    { title: "MACKAY",   state: "QLD", code: "MACR", type: "THOROUGHBREDS" },
+    { title: "ROCKHAMPTON",   state: "QLD", code: "ROCR", type: "THOROUGHBREDS" },
+    { title: "TOOWOOMBA",   state: "QLD", code: "TWBG", type: "GREYHOUNDS" },
+    { title: "TOOWOOMBA",   state: "QLD", code: "TWBH", type: "HARNESS" },
+    { title: "TOOWOOMBA",   state: "QLD", code: "TWBR", type: "THOROUGHBREDS" },
+
+    { title: "ASCOT",   state: "QLD", code: "ASTR", type: "THOROUGHBREDS" },
+    { title: "BELMONT",   state: "QLD", code: "BELR", type: "THOROUGHBREDS" },
+
+    { title: "DEVONPORT",   state: "VIC", code: "DEVG", type: "GREYHOUNDS" },
+    { title: "DEVONPORT",   state: "VIC", code: "DEVH", type: "HARNESS" },
+    { title: "DEVONPORT",   state: "VIC", code: "DEVR", type: "THOROUGHBREDS" },
+
+    { title: "HOBART",   state: "VIC", code: "HOBG", type: "GREYHOUNDS" },
+    { title: "HOBART",   state: "VIC", code: "HOBH", type: "HARNESS" },
+    { title: "HOBART",   state: "VIC", code: "HOBR", type: "THOROUGHBREDS" },
+    { title: "LAUNCESTON",   state: "VIC", code: "LAUG", type: "GREYHOUNDS" },
+    { title: "LAUNCESTON",   state: "VIC", code: "LAUH", type: "HARNESS" },
+    { title: "LAUNCESTON",   state: "VIC", code: "LAUR", type: "THOROUGHBREDS" },
+
+
+    // PAGE 5
+
+    { title: "NEWCASTLE",   state: "NSW", code: "NEWG", type: "GREYHOUNDS" },
+    { title: "NEWCASTLE",   state: "NSW", code: "NEWH", type: "HARNESS" },
+    { title: "NEWCASTLE",   state: "NSW", code: "NEWR", type: "THOROUGHBREDS" },
+    { title: "NOWRA",   state: "NSW", code: "NOWG", type: "GREYHOUNDS" },
+    { title: "NOWRA",   state: "NSW", code: "NOWR", type: "THOROUGHBREDS" },
+    { title: "ORANGE",   state: "NSW", code: "ORAH", type: "HARNESS" },
+
+
+    { title: "ORANGE",   state: "NSW", code: "ORAR", type: "THOROUGHBREDS" },
+    { title: "PARKES",   state: "NSW", code: "PRKH", type: "HARNESS" },
+    { title: "PARKES",   state: "NSW", code: "PRKR", type: "THOROUGHBREDS" },
+    { title: "PEAK HILL",   state: "NSW", code: "PKHH", type: "HARNESS" },
+    { title: "PENRITH",   state: "NSW", code: "PENH", type: "HARNESS" },
+
+
+    { title: "PORT MACQUARIE",   state: "NSW", code: "PMQR", type: "THOROUGHBREDS" },
+    { title: "QUEANBEYAN",   state: "NSW", code: "QBYR", type: "THOROUGHBREDS" },
+    { title: "RICHMOND",   state: "NSW", code: "RICH", type: "HARNESS" },
+    { title: "QUIRINDI",   state: "NSW", code: "QRIR", type: "THOROUGHBREDS" },
+
+    { title: "ROSEHILL",   state: "NSW", code: "RSHR", type: "THOROUGHBREDS" },
+    { title: "SCONE",   state: "NSW", code: "SCOR", type: "THOROUGHBREDS" },
+    { title: "TAMWORTH",   state: "NSW", code: "TAMH", type: "HARNESS" },
+    { title: "TAMWORTH",   state: "NSW", code: "TAMR", type: "THOROUGHBREDS" },
+
+    { title: "TAREE",   state: "NSW", code: "TRER", type: "THOROUGHBREDS" },
+    { title: "WAGGA",   state: "NSW", code: "WAGG", type: "GREYHOUNDS" },
+    { title: "WAGGA",   state: "NSW", code: "WAGH", type: "HARNESS" },
+    { title: "WAGGA",   state: "NSW", code: "WAGR", type: "THOROUGHBREDS" },
+    { title: "WALCHA",   state: "NSW", code: "WLCR", type: "THOROUGHBREDS" },
+
+    { title: "WARREN",   state: "NSW", code: "WRER", type: "THOROUGHBREDS" },
+    { title: "WARWICK FARM",   state: "NSW", code: "WFMR", type: "THOROUGHBREDS" },
+    { title: "WAUCHOPE",   state: "NSW", code: "WHPR", type: "THOROUGHBREDS" },
+    { title: "WELLINGTON",   state: "NSW", code: "WTNR", type: "THOROUGHBREDS" },
+    { title: "WENTWORTH PARK ",   state: "NSW", code: "WWPG", type: "GREYHOUNDS" },
+    { title: "WYONG",   state: "NSW", code: "WYOG", type: "GREYHOUNDS" },
+
+    { title: "WYONG",   state: "NSW", code: "WYOH", type: "HARNESS" },
+    { title: "WYONG",   state: "NSW", code: "WYOR", type: "THOROUGHBREDS" },
+    { title: "YOUNG",   state: "NSW", code: "YONH", type: "HARNESS" },
+    { title: "GRIFFITH",   state: "NSW", code: "GRIH", type: "HARNESS" },
+    { title: "ANGLE PARK ",   state: "QLD", code: "ANGG", type: "GREYHOUNDS" },
+
+    { title: "CLARE",   state: "QLD", code: "CLAR", type: "THOROUGHBREDS" },
+    { title: "GAWLER",   state: "QLD", code: "GAWG", type: "GREYHOUNDS" },
+    { title: "GAWLER",   state: "QLD", code: "GAWH", type: "HARNESS" },
+    { title: "GAWLER",   state: "QLD", code: "GAWR", type: "THOROUGHBREDS" },
+    { title: "GLOBE DERBY",   state: "QLD", code: "GLDH", type: "HARNESS" },
+    { title: "HALIDON",   state: "QLD", code: "HALR", type: "THOROUGHBREDS" },
+
+    { title: "KADINA",   state: "QLD", code: "KADH", type: "HARNESS" },
+    { title: "KAPUNDA",   state: "QLD", code: "KPDH", type: "HARNESS" },
+    { title: "MOUNT GAMBIE",   state: "QLD", code: "MTGG", type: "GREYHOUNDS" },
+    { title: "MOUNT GAMBIER",   state: "QLD", code: "MTGH", type: "HARNESS" },
+    { title: "MOUNT GAMBIER",   state: "QLD", code: "MTGR", type: "THOROUGHBREDS" },
+
+    { title: "MURRAY BRIDGE",   state: "QLD", code: "MBRH", type: "HARNESS" },
+    { title: "MURRAY BRIDGE",   state: "QLD", code: "MBRR", type: "THOROUGHBREDS" },
+    { title: "NARACOORTE",   state: "QLD", code: "NARR", type: "THOROUGHBREDS" },
+
+    // PAGE 4
+
+    { title: "INVERELL",   state: "NSW", code: "IVLH", type: "HARNESS" },
+    { title: "KEMBLA GRANGE",   state: "NSW", code: "KGRR", type: "THOROUGHBREDS" },
+    { title: "KEMPSEY",   state: "NSW", code: "KEMR", type: "THOROUGHBREDS" },
+    { title: "LITHGOW",   state: "NSW", code: "LITH", type: "HARNESS" },
+    { title: "MENANGLE",   state: "NSW", code: "MENH", type: "HARNESS" },
+
+    // PAGE 3
+
+    { title: "SHEPPARTON",   state: "VIC", code: "SHEG", type: "GREYHOUNDS" },
+    { title: "SHEPPARTON",   state: "VIC", code: "SHEH", type: "HARNESS" },
+    { title: "SWAN HILL",   state: "VIC", code: "SWNH", type: "HARNESS" },
+
+    { title: "WARRNAMBOOL",   state: "VIC", code: "WBOG", type: "GREYHOUNDS" },
+    { title: "WARRNAMBOOL",   state: "VIC", code: "WBOH", type: "HARNESS" },
+    { title: "WARRNAMBOOL",   state: "VIC", code: "WBOR", type: "THOROUGHBREDS" },
+    { title: "WARRAGUL",   state: "VIC", code: "WRGG", type: "GREYHOUNDS" },
+    { title: "WARRAGUL",   state: "VIC", code: "WRGH", type: "HARNESS" },
+
+    { title: "WERRIBEE",   state: "VIC", code: "WRBR", type: "THOROUGHBREDS" },
+    { title: "SANDOWN PARK",   state: "VIC", code: "SANG", type: "GREYHOUNDS" },
+    { title: "ALBURY",   state: "NSW", code: "ALBH", type: "HARNESS" },
+    { title: "ALBURY",   state: "NSW", code: "ALBR", type: "THOROUGHBREDS" },
+
+    // PAGE 2 
+
+    { title: "KILMORE",   state: "VIC", code: "KILR", type: "THOROUGHBREDS" },
+    { title: "MORNINGTON",   state: "VIC", code: "MORR", type: "THOROUGHBREDS" },
+    { title: "MORTLAKE",   state: "VIC", code: "MLKR", type: "THOROUGHBREDS" },
+
+    { title: "MURTOA",   state: "VIC", code: "MURR", type: "THOROUGHBREDS" },
+    { title: "MARYBOROUGH",   state: "VIC", code: "MYBH", type: "HARNESS" },
+    { title: "NHILL",   state: "VIC", code: "NHLR", type: "THOROUGHBREDS" },
+    { title: "NYAH",   state: "VIC", code: "NYAH", type: "HARNESS" },
+    { title: "OUYEN",   state: "VIC", code: "OUYH", type: "HARNESS" },
+    { title: "PAKENHAM",   state: "VIC", code: "PAKR", type: "THOROUGHBREDS" },
+    { title: "PENSHURST",   state: "VIC", code: "PNHR", type: "THOROUGHBREDS" },
+
+     // NEW ADD 
+
+    { title: "TAREE",           state: "NSW", code: "TREG", type: "GREYHOUNDS" },
+    { title: "MURRAY BRIDGE",   state: "QLD", code: "MBRG", type: "GREYHOUNDS" },
+    { title: "GLOUCESTER PARK", state: "QLD", code: "GLPH", type: "HARNESS" },
+
+            
+        
+    ];
+
+
+    // ----------------------------------------------------------------------------------
+    // *** Helper Functions ***
+
+    /**
+     * Gets the current Sri Lanka time and date formatted for display.
+     * @returns {string} Formatted date and time string.
+     */
+    function getSriLankaDate() {
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            timeZone: 'Asia/Colombo' 
+        };
+        return new Date().toLocaleString('en-US', options);
+    }
+
+    /**
+     * Displays the Sri Lanka date on the page.
+     */
+    function displaySriLankaDate() {
+        const dateElement = document.getElementById('sriLankaDate');
+        if (dateElement) {
+            dateElement.textContent = `SRI LANKA : ${getSriLankaDate()}`;
+        }
+    }
+
+    /**
+     * Filters the data based on user input TITLE (can be multiple, comma-separated) and RACE TYPE, 
+     * adds unique matching results to the global array.
+     */
+    function searchData() {
+        const titleInputRaw = document.getElementById('titleInput').value.trim();
+        const raceType = document.getElementById('raceTypeSelect').value;
+
+        if (titleInputRaw === "") {
+            alert("Please enter one or more TITLEs (Course Names) to search, separated by commas if multiple.");
+            return;
+        }
+
+        // Split the raw input by comma, filter out empty strings, trim, and capitalize each one.
+        const searchTitles = titleInputRaw.split(',')
+                                          .map(title => title.trim().toUpperCase())
+                                          .filter(title => title.length > 0);
+
+        if (searchTitles.length === 0) {
+            alert("Please enter valid TITLEs.");
+            return;
+        }
+
+        // Prepare to track existing keys (Title + Code)
+        const existingKeys = currentDisplayedData.map(item => item.title + item.code);
+        let matchFoundInDatabase = false; // Flag to track if the search criteria matched anything
+
+        // Iterate through all raw course data
+        rawCourseData.forEach(item => {
+            const itemTitleUpper = item.title.toUpperCase();
+            const matchesRaceType = raceType === "ALL" || item.type === raceType;
+
+            // Check if the item's title is in the list of titles the user searched for
+            const matchesTitle = searchTitles.includes(itemTitleUpper);
+            
+            if (matchesTitle && matchesRaceType) {
+                 // Set flag to true if any match is found
+                 matchFoundInDatabase = true; 
+                 
+                 const newKey = item.title + item.code;
+                if (!existingKeys.includes(newKey)) {
+                    currentDisplayedData.push(item);
+                    existingKeys.push(newKey); // Update the keys list immediately
+                }
+            }
+        });
+        
+        // NEW ERROR CHECK: Alert the user if the search criteria found no results in the database
+        if (!matchFoundInDatabase) {
+             alert(`ERROR: No course codes found in the database matching the criteria:\nCourse(s): ${titleInputRaw}\nRace Type: ${raceType}`);
+        }
+        
+        // Render the updated dashboard
+        renderDashboard();
+    }
+
+    /**
+     * Clears all displayed data from the dashboard and the global array.
+     */
+    function clearAllData() {
+        if (currentDisplayedData.length === 0) {
+            alert("The dashboard is already empty.");
+            return;
+        }
+        if (confirm("Are you sure you want to clear ALL search results from the dashboard?")) {
+            currentDisplayedData = [];
+            renderDashboard();
+            alert("All search results cleared.");
+        }
+    }
+
+    /**
+     * Deletes a single entry from the global array and re-renders the dashboard.
+     * @param {string} title - The title of the entry to delete.
+     * @param {string} code - The code of the entry to delete.
+     */
+    function deleteEntry(title, code) {
+        // Only keep items that DO NOT match both the provided title AND code
+        currentDisplayedData = currentDisplayedData.filter(item => !(item.title === title && item.code === code));
+        renderDashboard();
+    }
+
+        // MIT AGCN License = Use it freely, just give credit
+
+    /**
+     * Groups data by race type and generates the HTML table output for the dashboard.
+     */
+    function renderDashboard() {
+        const outputDashboard = document.getElementById('outputDashboard');
+        const downloadPdfButton = document.getElementById('downloadPdfButton');
+        const viewPdfButton = document.getElementById('viewPdfButton');
+        const downloadTxtButton = document.getElementById('downloadTxtButton');
+        const searchResultsHeading = document.getElementById('searchResultsHeading');
+
+        const totalCount = currentDisplayedData.length; // Calculate total count
+
+        if (totalCount === 0) {
+            outputDashboard.innerHTML = '<p id="initialMessage" style="text-align: center; color: #777; padding: 20px; background: #f0f0f0; border-radius: 4px;">Enter a TITLE and RACE TYPE and click \'Search\' to view results.</p>';
+            downloadPdfButton.style.display = 'none'; // Hide PDF button when empty
+            viewPdfButton.style.display = 'none'; // Hide View button when empty
+            downloadTxtButton.style.display = 'none'; // Hide TXT button when empty
+            // Reset heading text when empty
+            searchResultsHeading.innerHTML = '📊 Search Results '; 
+            return;
+        }
+        
+        // ADDED: Update the main search results heading with the total count
+        searchResultsHeading.innerHTML = `📊 Search Results (${totalCount} Total)`;
+
+
+        // Show buttons when there are results
+        downloadPdfButton.style.display = 'inline-block';
+        viewPdfButton.style.display = 'inline-block';
+        downloadTxtButton.style.display = 'inline-block';
+
+        // Group the cumulative data by RACE TYPE
+        const groupedData = currentDisplayedData.reduce((acc, item) => {
+            if (!acc[item.type]) {
+                acc[item.type] = [];
+            }
+            acc[item.type].push(item);
+            return acc;
+        }, {});
+
+        // Generate HTML output, ordered by preference
+        let htmlContent = '';
+        const raceTypesOrder = ["THOROUGHBREDS", "HARNESS", "GREYHOUNDS"];
+
+        raceTypesOrder.forEach(type => {
+            if (groupedData[type] && groupedData[type].length > 0) {
+                // Sort items by title for consistency
+                const sortedItems = groupedData[type].sort((a, b) => a.title.localeCompare(b.title));
+
+                htmlContent += `<div class="race-type-section">
+                    <div class="race-type-title">${type} (${sortedItems.length} )</div>
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>TITLE (Course Name)</th>
+                                <th>STATE</th>
+                                <th>CODE</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+                sortedItems.forEach(item => {
+                    htmlContent += `
+                        <tr>
+                            <td>${item.title}</td>
+                            <td>${item.state}</td>
+                            <td>${item.code}</td>
+                            <td>
+                                <button class="delete-btn" onclick="deleteEntry('${item.title}', '${item.code}')">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                htmlContent += `</tbody></table></div>`;
+            }
+        });
+
+        outputDashboard.innerHTML = htmlContent;
+    }
+
+
+    /**
+     * Generates a plain text output of the currentDisplayedData, formatted for both PDF and TXT.
+     * @returns {string} The formatted plain text content.
+     */
+    function getPlainTextContent() {
+        const titleFixedLength = 20; // For aligning the state
+        const stateFixedLength = 8;  // For aligning the code
+        
+        // Calculate SL and AU dates
+        const slDate = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            timeZone: 'Asia/Colombo' 
+        };
+        const slDateString = slDate.toLocaleString('en-US', options);
+
+        // Add 2 days for AU Date
+        const auDate = new Date(slDate);
+        auDate.setDate(slDate.getDate() + 2);
+        const auDateString = auDate.toLocaleString('en-US', options);
+        
+        // Header for the output (uses monospace for alignment)
+        let textContent = `
+-------------------------------------------------------------
+DATE SL: ${slDateString}
+DATE AU: ${auDateString}
+TOOL: LSBET AUSTRALIA RACE CODE Finder Dashboard
+TOTAL CODES: ${currentDisplayedData.length}
+-------------------------------------------------------------
+`;
+
+        // Group the cumulative data by RACE TYPE
+        const groupedData = currentDisplayedData.reduce((acc, item) => {
+            if (!acc[item.type]) {
+                acc[item.type] = [];
+            }
+            acc[item.type].push(item);
+            return acc;
+        }, {});
+
+        // Generate output, ordered by preference
+        const raceTypesOrder = ["THOROUGHBREDS", "HARNESS", "GREYHOUNDS"];
+        raceTypesOrder.forEach(type => {
+            // Get sorted items for this type, default to empty array if none found
+            const sortedItems = groupedData[type] ? groupedData[type].sort((a, b) => a.title.localeCompare(b.title)) : [];
+
+            // Only print section title if there is data
+            if (sortedItems.length > 0) {
+                // STEP 1: ALWAYS print the race type title
+                textContent += `\n${type}\n`;
+                textContent += '-'.repeat(type.length) + '\n';
+
+                // STEP 2: Add the data rows
+                sortedItems.forEach(item => {
+                    // Pad the title to align the state (first tab stop)
+                    const paddedTitle = item.title.padEnd(titleFixedLength, ' ');
+                    // Pad the state to align the code (second tab stop)
+                    const paddedState = item.state.padEnd(stateFixedLength, ' ');
+
+                    // Format: TITLE (padded with wide space) STATE (padded with wide space) CODE
+                    textContent += `${paddedTitle}${paddedState}${item.code}\n`;
+                });
+                textContent += '\n'; // Extra line break after each section
+            }
+        });
+
+        return textContent;
+    }
+
+
+    /**
+     * Generates a PDF-friendly HTML output based on getPlainTextContent().
+     * This is used temporarily before generating the PDF/viewing.
+     */
+    function renderPdfContent() {
+        // Use the plain text content but wrap it in the required PDF formatting divs/classes
+        const textContent = getPlainTextContent();
+        let htmlContent = `
+<div class="pdf-output-data">
+    ${textContent.replace(/\n/g, '<br>').replace(/-{45,}/g, '<hr style="margin: 5px 0; border-top: 1px solid black;">')}
+</div>
+`;
+        // Post-processing to correctly re-add race-type-title class
+        htmlContent = htmlContent.replace(/(THOROUGHBREDS|HARNESS|GREYHOUNDS)/g, (match) => {
+            return `<div class="pdf-race-title">${match}</div>`;
+        });
+        
+        return htmlContent;
+    }
+
+
+    /**
+     * Downloads the content of the #pdfContent div (cumulative search results) as a plain text (.txt) file.
+     * This is the NEW function for the TXT button.
+     */
+    function downloadTxt() {
+        if (currentDisplayedData.length === 0) {
+            alert("The dashboard is empty. Please search for results before downloading the TXT file.");
+            return;
+        }
+
+        const textContent = getPlainTextContent();
+        const filename = `Australia Code List.txt`;
+        
+        // Create a Blob from the text content
+        const blob = new Blob([textContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create a temporary link element for download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click(); // Trigger the download
+        
+        // Clean up
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+
+
+    /**
+     * Views the content of the #pdfContent div (cumulative search results) as a PDF blob in a new tab.
+     */
+    function viewPdf() {
+        if (currentDisplayedData.length === 0) {
+            alert("The dashboard is empty. Please search for results before viewing the PDF.");
+            return;
+        }
+
+        const outputDashboard = document.getElementById('outputDashboard');
+        const searchResultsHeading = document.getElementById('searchResultsHeading');
+        const originalContent = outputDashboard.innerHTML;
+        
+        searchResultsHeading.style.display = 'none'; // Temporarily hide heading
+        outputDashboard.innerHTML = renderPdfContent(); 
+
+        const element = document.getElementById('pdfContent');
+        
+        const options = {
+            margin: 10,
+            filename: `Search_Results_${new Date().toLocaleDateString()}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, logging: false, dpi: 192, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+        };
+
+        html2pdf().set(options).from(element).output('bloburl').then((blobUrl) => {
+            window.open(blobUrl, '_blank'); 
+            
+            outputDashboard.innerHTML = originalContent;
+            searchResultsHeading.style.display = 'block';
+            renderDashboard(); 
+        });
+    }
+
+    /**
+     * Downloads the content of the #pdfContent div (cumulative search results) as a PDF.
+     */
+    function downloadPdf() {
+        if (currentDisplayedData.length === 0) {
+            alert("The dashboard is empty. Please search for results before downloading the PDF.");
+            return;
+        }
+
+        const outputDashboard = document.getElementById('outputDashboard');
+        const searchResultsHeading = document.getElementById('searchResultsHeading');
+        const originalContent = outputDashboard.innerHTML;
+        
+        searchResultsHeading.style.display = 'none';
+        outputDashboard.innerHTML = renderPdfContent(); 
+
+        const element = document.getElementById('pdfContent');
+        const filename = `Search_Results_${new Date().toLocaleDateString()}.pdf`;
+
+        const options = {
+            margin: 10,
+            filename: filename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, logging: false, dpi: 192, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+        };
+
+        html2pdf().set(options).from(element).save().then(() => {
+            outputDashboard.innerHTML = originalContent;
+            searchResultsHeading.style.display = 'block';
+            renderDashboard();
+        });
+    }
+
+    /**
+     * Downloads the FULL rawCourseData as a PDF.
+     */
+    function downloadAllDataAsPdf() {
+        if (rawCourseData.length === 0) {
+            alert("The raw data list is empty.");
+            return;
+        }
+
+        const outputDashboard = document.getElementById('outputDashboard');
+        const searchResultsHeading = document.getElementById('searchResultsHeading');
+        const originalData = [...currentDisplayedData]; 
+        const originalContent = outputDashboard.innerHTML;
+        
+        searchResultsHeading.style.display = 'none';
+
+        currentDisplayedData = rawCourseData;
+        outputDashboard.innerHTML = renderPdfContent(); 
+        currentDisplayedData = originalData; 
+
+        const element = document.getElementById('pdfContent');
+        const filename = `ALL_Course_Codes_Full_List.pdf`;
+        
+        const options = {
+            margin: 10,
+            filename: filename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, logging: false, dpi: 192, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+        };
+
+        html2pdf().set(options).from(element).save().then(() => {
+            outputDashboard.innerHTML = originalContent; 
+            searchResultsHeading.style.display = 'block';
+            renderDashboard(); 
+        });
+    }
+    
+    // Initial call to set up the dashboard on load
+    document.addEventListener('DOMContentLoaded', (event) => {
+        displaySriLankaDate();
+        renderDashboard();
+        // Update date every second
+        setInterval(displaySriLankaDate, 1000);
+    });
+</script>
+
+</body>
+</html>
+
