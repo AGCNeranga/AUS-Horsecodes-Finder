@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LSPublication Australian CodeS</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <style>
         /* --- VVIP AGCN DARK THEME --- */
         :root {
@@ -18,7 +19,7 @@
             --shadow-yellow: 0 0 8px var(--neon-yellow), 0 0 15px var(--neon-yellow);
         }
 
-        /*  Fonts */
+        /* Fonts */
         body {
             font-family: 'Orbitron', 'Segoe UI', sans-serif;
             margin: 0;
@@ -300,6 +301,15 @@
             outline: 1px solid var(--neon-green);
         }
         
+        /* Added for Drag Handle indication */
+        .result-table tbody tr {
+            cursor: move;
+        }
+        .sortable-ghost {
+            opacity: 0.4;
+            background-color: var(--neon-green) !important;
+        }
+
         #initialMessage {
             background: rgba(255, 215, 0, 0.1) !important;
             color: var(--neon-yellow) !important;
@@ -374,8 +384,6 @@
 </head>
 <body>
 
-
-
 <div class="container">
     
     <div class="header-top">
@@ -385,8 +393,8 @@
 
     <h1>
         <span style="font-size: 1.2em; margin-right: 15px;"> </span>
-
-Australian Horse Racing Codes (ISO 3166) </h1>
+        Australian Horse Racing Codes (ISO 3166) 
+    </h1>
 
     <div class="input-section">
         <div class="input-group">
@@ -426,20 +434,19 @@ Australian Horse Racing Codes (ISO 3166) </h1>
 </div>
 
 <script>
-    // Global variable to store all entries currently displayed on the dashboard
     let currentDisplayedData = [];
 
-    // ----------------------------------------------------------------------------------
-    // *** Data Extracted and Cleaned from your PDF ***
     const rawCourseData = [
-      
-                // MIT AGCN License = Use it freely, just give credit
+       
+   
+ // MIT AGCN License = Use it freely, just give credit
 
   // PAGE 12
 
         
     { title: "WENTWORTH PARK",         state: "NSW", code: "WWPG", type: "THOROUGHBREDS" },
     { title: "GLOUCESTER PARK",        state: "QLD", code: "GLPR", type: "THOROUGHBREDS" },
+
 
 
 
@@ -1106,31 +1113,15 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         
     ];
 
-
-    // ----------------------------------------------------------------------------------
-    // *** Helper Functions ***
-
-    /**
-     * Gets the current Sri Lanka time and date formatted for display.
-     * @returns {string} Formatted date and time string.
-     */
     function getSriLankaDate() {
         const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric', 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit', 
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+            hour: '2-digit', minute: '2-digit', second: '2-digit', 
             timeZone: 'Asia/Colombo' 
         };
         return new Date().toLocaleString('en-US', options);
     }
 
-    /**
-     * Displays the Sri Lanka date on the page.
-     */
     function displaySriLankaDate() {
         const dateElement = document.getElementById('sriLankaDate');
         if (dateElement) {
@@ -1138,10 +1129,6 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         }
     }
 
-    /**
-     * Filters the data based on user input TITLE (can be multiple, comma-separated) and RACE TYPE, 
-     * adds unique matching results to the global array.
-     */
     function searchData() {
         const titleInputRaw = document.getElementById('titleInput').value.trim();
         const raceType = document.getElementById('raceTypeSelect').value;
@@ -1151,7 +1138,6 @@ Australian Horse Racing Codes (ISO 3166) </h1>
             return;
         }
 
-        // Split the raw input by comma, filter out empty strings, trim, and capitalize each one.
         const searchTitles = titleInputRaw.split(',')
                                           .map(title => title.trim().toUpperCase())
                                           .filter(title => title.length > 0);
@@ -1161,42 +1147,31 @@ Australian Horse Racing Codes (ISO 3166) </h1>
             return;
         }
 
-        // Prepare to track existing keys (Title + Code)
         const existingKeys = currentDisplayedData.map(item => item.title + item.code);
-        let matchFoundInDatabase = false; // Flag to track if the search criteria matched anything
+        let matchFoundInDatabase = false; 
 
-        // Iterate through all raw course data
         rawCourseData.forEach(item => {
             const itemTitleUpper = item.title.toUpperCase();
             const matchesRaceType = raceType === "ALL" || item.type === raceType;
-
-            // Check if the item's title is in the list of titles the user searched for
             const matchesTitle = searchTitles.includes(itemTitleUpper);
             
             if (matchesTitle && matchesRaceType) {
-                 // Set flag to true if any match is found
                  matchFoundInDatabase = true; 
-                 
                  const newKey = item.title + item.code;
                 if (!existingKeys.includes(newKey)) {
                     currentDisplayedData.push(item);
-                    existingKeys.push(newKey); // Update the keys list immediately
+                    existingKeys.push(newKey); 
                 }
             }
         });
         
-        // NEW ERROR CHECK: Alert the user if the search criteria found no results in the database
         if (!matchFoundInDatabase) {
              alert(`ERROR: No course codes found in the database matching the criteria:\nCourse(s): ${titleInputRaw}\nRace Type: ${raceType}`);
         }
         
-        // Render the updated dashboard
         renderDashboard();
     }
 
-    /**
-     * Clears all displayed data from the dashboard and the global array.
-     */
     function clearAllData() {
         if (currentDisplayedData.length === 0) {
             alert("The dashboard is already empty.");
@@ -1209,22 +1184,11 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         }
     }
 
-    /**
-     * Deletes a single entry from the global array and re-renders the dashboard.
-     * @param {string} title - The title of the entry to delete.
-     * @param {string} code - The code of the entry to delete.
-     */
     function deleteEntry(title, code) {
-        // Only keep items that DO NOT match both the provided title AND code
         currentDisplayedData = currentDisplayedData.filter(item => !(item.title === title && item.code === code));
         renderDashboard();
     }
 
-        // MIT AGCN License = Use it freely, just give credit
-
-    /**
-     * Groups data by race type and generates the HTML table output for the dashboard.
-     */
     function renderDashboard() {
         const outputDashboard = document.getElementById('outputDashboard');
         const downloadPdfButton = document.getElementById('downloadPdfButton');
@@ -1232,64 +1196,53 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         const downloadTxtButton = document.getElementById('downloadTxtButton');
         const searchResultsHeading = document.getElementById('searchResultsHeading');
 
-        const totalCount = currentDisplayedData.length; // Calculate total count
+        const totalCount = currentDisplayedData.length;
 
         if (totalCount === 0) {
             outputDashboard.innerHTML = '<p id="initialMessage" style="text-align: center; color: #777; padding: 20px; background: #f0f0f0; border-radius: 4px;">Enter a TITLE and RACE TYPE and click \'Search\' to view results.</p>';
-            downloadPdfButton.style.display = 'none'; // Hide PDF button when empty
-            viewPdfButton.style.display = 'none'; // Hide View button when empty
-            downloadTxtButton.style.display = 'none'; // Hide TXT button when empty
-            // Reset heading text when empty
+            downloadPdfButton.style.display = 'none'; 
+            viewPdfButton.style.display = 'none'; 
+            downloadTxtButton.style.display = 'none'; 
             searchResultsHeading.innerHTML = '📊 Search Results '; 
             return;
         }
         
-        // ADDED: Update the main search results heading with the total count
         searchResultsHeading.innerHTML = `📊 Search Results (${totalCount} Total)`;
 
-
-        // Show buttons when there are results
         downloadPdfButton.style.display = 'inline-block';
         viewPdfButton.style.display = 'inline-block';
         downloadTxtButton.style.display = 'inline-block';
 
-        // Group the cumulative data by RACE TYPE
         const groupedData = currentDisplayedData.reduce((acc, item) => {
-            if (!acc[item.type]) {
-                acc[item.type] = [];
-            }
+            if (!acc[item.type]) acc[item.type] = [];
             acc[item.type].push(item);
             return acc;
         }, {});
 
-        // Generate HTML output, ordered by preference
         let htmlContent = '';
         const raceTypesOrder = ["THOROUGHBREDS", "HARNESS", "GREYHOUNDS"];
 
         raceTypesOrder.forEach(type => {
             if (groupedData[type] && groupedData[type].length > 0) {
-                // Sort items by title for consistency
-                const sortedItems = groupedData[type].sort((a, b) => a.title.localeCompare(b.title));
-
                 htmlContent += `<div class="race-type-section">
-                    <div class="race-type-title">${type} (${sortedItems.length} )</div>
+                    <div class="race-type-title">${type} (${groupedData[type].length} )</div>
                     <table class="result-table">
                         <thead>
                             <tr>
                                 <th>TITLE (Course Name)</th>
-                                <th>STATE</th>
                                 <th>CODE</th>
+                                <th>STATE</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>`;
+                        <tbody id="list-${type}">`;
 
-                sortedItems.forEach(item => {
+                groupedData[type].forEach(item => {
                     htmlContent += `
-                        <tr>
+                        <tr data-title="${item.title}" data-code="${item.code}">
                             <td>${item.title}</td>
-                            <td>${item.state}</td>
                             <td>${item.code}</td>
+                            <td>${item.state}</td>
                             <td>
                                 <button class="delete-btn" onclick="deleteEntry('${item.title}', '${item.code}')">Delete</button>
                             </td>
@@ -1302,37 +1255,51 @@ Australian Horse Racing Codes (ISO 3166) </h1>
         });
 
         outputDashboard.innerHTML = htmlContent;
+
+        // Initialize Sortable for each category
+        raceTypesOrder.forEach(type => {
+            const el = document.getElementById(`list-${type}`);
+            if (el) {
+                Sortable.create(el, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    onEnd: function() {
+                        // Update the currentDisplayedData array to match the new visual order
+                        updateDataOrder();
+                    }
+                });
+            }
+        });
     }
 
+    function updateDataOrder() {
+        let newDataOrder = [];
+        const rows = document.querySelectorAll('.result-table tbody tr');
+        rows.forEach(row => {
+            const title = row.getAttribute('data-title');
+            const code = row.getAttribute('data-code');
+            const item = currentDisplayedData.find(i => i.title === title && i.code === code);
+            if (item) newDataOrder.push(item);
+        });
+        currentDisplayedData = newDataOrder;
+    }
 
-    /**
-     * Generates a plain text output of the currentDisplayedData, formatted for both PDF and TXT.
-     * @returns {string} The formatted plain text content.
-     */
     function getPlainTextContent() {
-        const titleFixedLength = 20; // For aligning the state
-        const stateFixedLength = 8;  // For aligning the code
+        const titleFixedLength = 20; 
+        const stateFixedLength = 8;  
         
-        // Calculate SL and AU dates
         const slDate = new Date();
         const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric', 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit', 
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+            hour: '2-digit', minute: '2-digit', second: '2-digit', 
             timeZone: 'Asia/Colombo' 
         };
         const slDateString = slDate.toLocaleString('en-US', options);
 
-        // Add 2 days for AU Date
         const auDate = new Date(slDate);
         auDate.setDate(slDate.getDate() + 2);
         const auDateString = auDate.toLocaleString('en-US', options);
         
-        // Header NEW for the output (uses monospace for alignment)
         let textContent = `
 -------------------------------------------------------------
 DATE SL: ${slDateString}
@@ -1342,213 +1309,109 @@ TOTAL CODES: ${currentDisplayedData.length}
 -------------------------------------------------------------
 `;
 
-        // Group the cumulative data by RACE TYPE
         const groupedData = currentDisplayedData.reduce((acc, item) => {
-            if (!acc[item.type]) {
-                acc[item.type] = [];
-            }
+            if (!acc[item.type]) acc[item.type] = [];
             acc[item.type].push(item);
             return acc;
         }, {});
 
-        // Generate output, ordered by preference
         const raceTypesOrder = ["THOROUGHBREDS", "HARNESS", "GREYHOUNDS"];
         raceTypesOrder.forEach(type => {
-            // Get sorted items for this type, default to empty array if none found
-            const sortedItems = groupedData[type] ? groupedData[type].sort((a, b) => a.title.localeCompare(b.title)) : [];
-
-            // Only print section title if there is data
-            if (sortedItems.length > 0) {
-                // STEP 1: ALWAYS print the race type title
+            const items = groupedData[type] || [];
+            if (items.length > 0) {
                 textContent += `\n${type}\n`;
                 textContent += '-'.repeat(type.length) + '\n';
-
-                // STEP 2: Add the data rows
-                sortedItems.forEach(item => {
-                    // Pad the title to align the state (first tab stop)
+                items.forEach(item => {
                     const paddedTitle = item.title.padEnd(titleFixedLength, ' ');
-                    // Pad the state to align the code (second tab stop)
-                    const paddedState = item.state.padEnd(stateFixedLength, ' ');
-
-                    // Format: TITLE (padded with wide space) STATE (padded with wide space) CODE
-                    textContent += `${paddedTitle}${paddedState}${item.code}\n`;
+                    const paddedCode = item.code.padEnd(stateFixedLength, ' ');
+                    textContent += `${paddedTitle}${paddedCode}${item.state}\n`;
                 });
-                textContent += '\n'; // Extra line break after each section
+                textContent += '\n'; 
             }
         });
-
         return textContent;
     }
 
-
-    /**
-     * Generates a PDF-friendly HTML output based on getPlainTextContent().
-     * This is used temporarily before generating the PDF/viewing.
-     */
     function renderPdfContent() {
-        // Use the plain text content but wrap it in the required PDF formatting divs/classes
         const textContent = getPlainTextContent();
-        let htmlContent = `
-<div class="pdf-output-data">
-    ${textContent.replace(/\n/g, '<br>').replace(/-{45,}/g, '<hr style="margin: 5px 0; border-top: 1px solid black;">')}
-</div>
-`;
-        // Post-processing to correctly re-add race-type-title class
-        htmlContent = htmlContent.replace(/(THOROUGHBREDS|HARNESS|GREYHOUNDS)/g, (match) => {
-            return `<div class="pdf-race-title">${match}</div>`;
-        });
-        
+        let htmlContent = `<div class="pdf-output-data">${textContent.replace(/\n/g, '<br>').replace(/-{45,}/g, '<hr style="margin: 5px 0; border-top: 1px solid black;">')}</div>`;
+        htmlContent = htmlContent.replace(/(THOROUGHBREDS|HARNESS|GREYHOUNDS)/g, (match) => `<div class="pdf-race-title">${match}</div>`);
         return htmlContent;
     }
 
-
-    /**
-     * Downloads the content of the #pdfContent div (cumulative search results) as a plain text (.txt) file.
-     * This is the NEW function for the TXT button.
-     */
     function downloadTxt() {
-        if (currentDisplayedData.length === 0) {
-            alert("The dashboard is empty. Please search for results before downloading the TXT file.");
-            return;
-        }
-
+        if (currentDisplayedData.length === 0) return alert("Dashboard empty.");
         const textContent = getPlainTextContent();
-        const filename = `Australia Code List.txt`;
-        
-        // Create a Blob from the text content
         const blob = new Blob([textContent], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
-        
-        // Create a temporary link element for download
         const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click(); // Trigger the download
-        
-        // Clean up
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        a.href = url; a.download = `Australia Code List.txt`;
+        document.body.appendChild(a); a.click();
+        document.body.removeChild(a); URL.revokeObjectURL(url);
     }
 
-
-
-    /**
-     * Views the content of the #pdfContent div (cumulative search results) as a PDF blob in a new tab.
-     */
     function viewPdf() {
-        if (currentDisplayedData.length === 0) {
-            alert("The dashboard is empty. Please search for results before viewing the PDF.");
-            return;
-        }
-
+        if (currentDisplayedData.length === 0) return alert("Dashboard empty.");
         const outputDashboard = document.getElementById('outputDashboard');
         const searchResultsHeading = document.getElementById('searchResultsHeading');
         const originalContent = outputDashboard.innerHTML;
-        
-        searchResultsHeading.style.display = 'none'; // Temporarily hide heading
+        searchResultsHeading.style.display = 'none'; 
         outputDashboard.innerHTML = renderPdfContent(); 
-
         const element = document.getElementById('pdfContent');
-        
         const options = {
-            margin: 10,
-            filename: `Search_Results_${new Date().toLocaleDateString()}.pdf`,
+            margin: 10, filename: `Search_Results.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, logging: false, dpi: 192, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+            html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
         };
-
         html2pdf().set(options).from(element).output('bloburl').then((blobUrl) => {
             window.open(blobUrl, '_blank'); 
-            
-            outputDashboard.innerHTML = originalContent;
-            searchResultsHeading.style.display = 'block';
-            renderDashboard(); 
+            outputDashboard.innerHTML = originalContent; searchResultsHeading.style.display = 'block'; renderDashboard(); 
         });
     }
 
-    /**
-     * Downloads the content of the #pdfContent div (cumulative search results) as a PDF.
-     */
     function downloadPdf() {
-        if (currentDisplayedData.length === 0) {
-            alert("The dashboard is empty. Please search for results before downloading the PDF.");
-            return;
-        }
-
+        if (currentDisplayedData.length === 0) return alert("Dashboard empty.");
         const outputDashboard = document.getElementById('outputDashboard');
         const searchResultsHeading = document.getElementById('searchResultsHeading');
         const originalContent = outputDashboard.innerHTML;
-        
-        searchResultsHeading.style.display = 'none';
-        outputDashboard.innerHTML = renderPdfContent(); 
-
+        searchResultsHeading.style.display = 'none'; outputDashboard.innerHTML = renderPdfContent(); 
         const element = document.getElementById('pdfContent');
-        const filename = `Search_Results_${new Date().toLocaleDateString()}.pdf`;
-
         const options = {
-            margin: 10,
-            filename: filename,
+            margin: 10, filename: `Search_Results.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, logging: false, dpi: 192, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+            html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
         };
-
         html2pdf().set(options).from(element).save().then(() => {
-            outputDashboard.innerHTML = originalContent;
-            searchResultsHeading.style.display = 'block';
-            renderDashboard();
+            outputDashboard.innerHTML = originalContent; searchResultsHeading.style.display = 'block'; renderDashboard();
         });
     }
 
-    /**
-     * Downloads the FULL rawCourseData as a PDF.
-     */
     function downloadAllDataAsPdf() {
-        if (rawCourseData.length === 0) {
-            alert("The raw data list is empty.");
-            return;
-        }
-
         const outputDashboard = document.getElementById('outputDashboard');
         const searchResultsHeading = document.getElementById('searchResultsHeading');
         const originalData = [...currentDisplayedData]; 
         const originalContent = outputDashboard.innerHTML;
-        
         searchResultsHeading.style.display = 'none';
-
         currentDisplayedData = rawCourseData;
         outputDashboard.innerHTML = renderPdfContent(); 
         currentDisplayedData = originalData; 
-
         const element = document.getElementById('pdfContent');
-        const filename = `ALL_Course_Codes_Full_List.pdf`;
-        
         const options = {
-            margin: 10,
-            filename: filename,
+            margin: 10, filename: `ALL_Course_Codes.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, logging: false, dpi: 192, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+            html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
         };
-
         html2pdf().set(options).from(element).save().then(() => {
-            outputDashboard.innerHTML = originalContent; 
-            searchResultsHeading.style.display = 'block';
-            renderDashboard(); 
+            outputDashboard.innerHTML = originalContent; searchResultsHeading.style.display = 'block'; renderDashboard(); 
         });
     }
     
-    // Initial call to set up the dashboard on load
-    document.addEventListener('DOMContentLoaded', (event) => {
+    document.addEventListener('DOMContentLoaded', () => {
         displaySriLankaDate();
         renderDashboard();
-        // Update date every second
         setInterval(displaySriLankaDate, 1000);
     });
 </script>
 
 </body>
 </html>
-
