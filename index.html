@@ -434,12 +434,27 @@
 </div>
 
 <script>
+    /* SECURITY SCRIPT 
+       - Disables Right Click
+       - Disables Inspect Element (F12, Ctrl+Shift+I, Ctrl+U)
+    */
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        // Block F12
+        if(e.keyCode == 123) return false;
+        // Block Ctrl+Shift+I
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+        // Block Ctrl+Shift+J
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+        // Block Ctrl+U
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+    };
+
     let currentDisplayedData = [];
 
     const rawCourseData = [
-       
-   
- // MIT AGCN License = Use it freely, just give credit
+ 
+// MIT AGCN License = Use it freely, just give credit
 
   // PAGE 12
 
@@ -1110,7 +1125,7 @@
 
 
             
-        
+ 
     ];
 
     function getSriLankaDate() {
@@ -1264,7 +1279,6 @@
                     animation: 150,
                     ghostClass: 'sortable-ghost',
                     onEnd: function() {
-                        // Update the currentDisplayedData array to match the new visual order
                         updateDataOrder();
                     }
                 });
